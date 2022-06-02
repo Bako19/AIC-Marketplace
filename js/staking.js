@@ -370,10 +370,10 @@ async function loadTokens() {
         tokens.forEach(async tokenId => {
 
             document.getElementById("ownedTokens").innerHTML += `
-    <div class="col-12 col-md-6 col-lg-6">
+    <div class="col-12 col-sm-8 col-md-5 col-lg-4 col-xl-6">
             <div class="rounded m-2 pb-5 bg2 row justify-content-center">
                 <div>
-                    <div id="token-${tokenId}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
+                    <div id="token-${tokenId}" class="position-relative my-2 mt-3 mx-auto rounded-3 widthfit"style="border:2px solid rgb(0 0 0 / 0%)">
                         <div class="form-check position-absolute checkpos p-0">
                             <input class="form-check-input rounded-circle selectable1" onclick="toggleBorder(${tokenId},'o');"
                                 type="checkbox" value="" id="checkboxOf-${tokenId}"style="cursor:pointer;">
@@ -400,10 +400,10 @@ async function loadTokens() {
                 let circle5 = (tokenData.passedTime >= 5 * 24 * 60 * 60) ? "color1" : "color2";
                 let circle15 = (tokenData.passedTime >= 15 * 24 * 60 * 60) ? "color1" : "color2";
                 let circle30 = (tokenData.passedTime >= 30 * 24 * 60 * 60) ? "color1" : "color2";
-                document.getElementById("stakedTokens").innerHTML += `<div class="col-12 col-md-6 col-lg-4">
+                document.getElementById("stakedTokens").innerHTML += `<div class="col-12 col-sm-8 col-md-5 col-lg-4 col-xl-4">
                 <div class="rounded m-2 bg2 row justify-content-center">
                     <div>
-                        <div id="token-${tokenId}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
+                        <div id="token-${tokenId}" class="position-relative my-2 mt-3 mx-auto rounded-3 widthfit"style="border:2px solid rgb(0 0 0 / 0%)">
                             <div class="form-check position-absolute checkpos p-0">
                                 <input class="form-check-input rounded-circle selectable1" onclick="toggleBorder(${tokenId},'s');"
                                     type="checkbox" value=""id="checkboxOf-${tokenId}" style="cursor:pointer;">
@@ -414,7 +414,7 @@ async function loadTokens() {
                         </div>
                         <div class="modal fade" id="modalForToken-${tokenId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content rounded-3 bg1">
                                     <div class="modal-header py-0 pt-4 m-start text-light border-0 bg1">
                                         <p></p>
