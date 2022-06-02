@@ -373,7 +373,7 @@ async function loadTokens() {
     <div class="col-12 col-md-6 col-lg-6">
             <div class="rounded m-2 pb-5 bg2 row justify-content-center">
                 <div>
-                    <div id="token-${tokenId}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
+                    <div id="token-${tokenId}" class="position-relative my-2 mt-3 mx-auto rounded-3 widthfit"style="border:2px solid rgb(0 0 0 / 0%)">
                         <div class="form-check position-absolute checkpos p-0">
                             <input class="form-check-input rounded-circle selectable1" onclick="toggleBorder(${tokenId},'o');"
                                 type="checkbox" value="" id="checkboxOf-${tokenId}"style="cursor:pointer;">
@@ -403,7 +403,7 @@ async function loadTokens() {
                 document.getElementById("stakedTokens").innerHTML += `<div class="col-12 col-md-6 col-lg-4">
                 <div class="rounded m-2 bg2 row justify-content-center">
                     <div>
-                        <div id="token-${tokenId}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
+                        <div id="token-${tokenId}" class="position-relative my-2 mt-3 mx-auto rounded-3 widthfit"style="border:2px solid rgb(0 0 0 / 0%)">
                             <div class="form-check position-absolute checkpos p-0">
                                 <input class="form-check-input rounded-circle selectable1" onclick="toggleBorder(${tokenId},'s');"
                                     type="checkbox" value=""id="checkboxOf-${tokenId}" style="cursor:pointer;">

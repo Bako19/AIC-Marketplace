@@ -860,7 +860,7 @@ a:active {
     font-family: "obviously-wide", sans-serif;
     font-style: normal;
     font-weight: 700;
-    line-height: 20px;
+    line-height: 40px;
 }
 
 .font2 {
@@ -1088,6 +1088,9 @@ a:active {
     .font5 {
         font-size: 30px;
     }
+    .font1 {
+        font-size: 30px;
+    }
 
     .hbtn1 {
         font-size: 18px;
@@ -1101,6 +1104,14 @@ a:active {
         font-weight: 100;
         font-size: 9px;
         max-width: 100px;
+    }
+
+    .hbtn1 {
+        font-size: 11px;
+    }
+    
+    .hbtn2 {
+        font-size: 11px;
     }
 }
 
@@ -1116,9 +1127,17 @@ a:active {
     }
 }
 
-@media (min-width: 1300px) {
+@media (min-width: 1200px) {
     .font5 {
         font-size: 25px;
+    }
+
+    .hbtn1 {
+        font-size: 11px;
+    }
+    
+    .hbtn2 {
+        font-size: 11px;
     }
 }
 
@@ -1145,4 +1164,8 @@ a:active {
 
 .heightfit{
     height: fit-content;
+}
+
+.widthfit{
+    width: fit-content;
 }
