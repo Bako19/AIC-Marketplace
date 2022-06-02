@@ -414,7 +414,7 @@ async function loadTokens() {
                         </div>
                         <div class="modal fade" id="modalForToken-${tokenId}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
                             aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                 <div class="modal-content rounded-3 bg1">
                                     <div class="modal-header py-0 pt-4 m-start text-light border-0 bg1">
                                         <p></p>
