@@ -562,6 +562,11 @@ a:active {
     margin-top: 15vh;
 }
 
+.S2 {
+    margin-top: 31vh;
+    margin-bottom: 20vh;
+}
+
 .cardbg {
     background-color: rgb(49, 49, 49);
 }
@@ -768,7 +773,7 @@ a:active {
     font-style: normal;
     font-weight: 600;
     font-size: 13px;
-    line-height: 20px;
+    line-height: 10px;
     margin-right: 0.7vw;
 }
 
@@ -777,7 +782,7 @@ a:active {
     font-style: normal;
     font-weight: 600;
     font-size: 13px;
-    line-height: 20px;
+    line-height: 10px;
 }
 
 .tier {
@@ -860,7 +865,6 @@ a:active {
     font-family: "obviously-wide", sans-serif;
     font-style: normal;
     font-weight: 700;
-    line-height: 40px;
 }
 
 .font2 {
@@ -1075,6 +1079,38 @@ a:active {
     color: #ff0;
 }
 
+.font16 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 115%;
+}
+
+.font17 {
+    font-family: 'Obviously';
+    font-style: italic;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 115%;
+}
+
+.font18 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.font19 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+}
+
 .deta {
     height: 400px;
 }
@@ -1088,6 +1124,7 @@ a:active {
     .font5 {
         font-size: 30px;
     }
+
     .font1 {
         font-size: 30px;
     }
@@ -1109,9 +1146,14 @@ a:active {
     .hbtn1 {
         font-size: 11px;
     }
-    
+
     .hbtn2 {
         font-size: 11px;
+    }
+
+
+    .S2 {
+        margin-top: 10vh;
     }
 }
 
@@ -1135,7 +1177,7 @@ a:active {
     .hbtn1 {
         font-size: 11px;
     }
-    
+
     .hbtn2 {
         font-size: 11px;
     }
@@ -1162,10 +1204,44 @@ a:active {
 }
 
 
-.heightfit{
+.heightfit {
     height: fit-content;
 }
 
-.widthfit{
+.widthfit {
     width: fit-content;
+}
+
+
+
+
+
+
+.fade-out-down {
+    -webkit-animation: fade-out-down 2s ease infinite;
+    animation: fade-out-down 2s ease infinite
+}
+
+@-webkit-keyframes fade-out-down {
+    0% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(20px)
+    }
+}
+
+@keyframes fade-out-down {
+    0% {
+        opacity: 1;
+        transform: translateY(0)
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(20px)
+    }
 }
