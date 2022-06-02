@@ -228,7 +228,7 @@ async function connect() {
     if (selectedAccount) {
         document.getElementById("connect-button").classList.add("d-none");
         document.getElementById("wallet-button").classList.remove("d-none");
-        document.getElementById("wallet-button").innerHTML = `<img src="./images/Vector (3).svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
+        document.getElementById("wallet-button").innerHTML = `<img src="../images/Vector (3).svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
         isConnected = true;
     }
 }
