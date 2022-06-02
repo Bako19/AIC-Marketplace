@@ -7,7 +7,7 @@ let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
 
-let contractAddress = "0xE84400c053d2C6FfEa2DF75EfE589b50585ED0b5";
+let contractAddress = "0x3A4F04F639E91570Eb86050886439eB9Fb20b68c";
 let mainContractAddress = "0x0c754233A2C3133aD6235686c2D694Caca793339";
 let abi = [{
         "inputs": [{
@@ -393,6 +393,7 @@ async function loadTokens() {
     contract.methods.tokensStakedBy(selectedAccount).call().then(tokens => {
         document.getElementById("stakedTokens").innerHTML = "";
         tokens.forEach(async (state, tokenId) => {
+            tokenId += 1;
             if (state == true) {
                 let tokenData = await contract.methods.checkStakeTierOfToken(tokenId).call();
 
@@ -526,7 +527,7 @@ async function stake() {
         stakingContract.methods.stake(selectedOwnedAgents).send({
             from: selectedAccount
         }).then(status => {
-            console.log(status)
+            loadTokens()
         })
     } else {
         mainContract.methods.setApprovalForAll(contractAddress, true).send({
@@ -552,7 +553,7 @@ async function unstakeAll() {
     let tokensStakedIds = [];
     tokensStaked.forEach((state, tokenId) => {
         if (state == true) {
-            tokensStakedIds.push(tokenId)
+            tokensStakedIds.push(tokenId + 1)
         }
     })
     if (tokensStakedIds.length == 0) {
