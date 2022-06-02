@@ -669,12 +669,6 @@ a:active {
     padding: 0%;
 }
 
-@media (min-width: 576px) {
-    .modal-dialog {
-        max-width: 780px !important;
-    }
-}
-
 /* END OF FILTER MODAL */
 /* END OF FILTER MODAL */
 /* END OF FILTER MODAL */
@@ -757,6 +751,10 @@ a:active {
     background-color: #363636;
 }
 
+.bg3 {
+    background-color: black;
+}
+
 .progressfont {
     font-family: 'Obviously';
     font-style: normal;
@@ -814,7 +812,6 @@ a:active {
     background-color: #ff0;
 }
 
-.yellowbtn:focus,
 .yellowbtn:active {
     background-color: #e4e400;
 }
@@ -827,7 +824,6 @@ a:active {
     background-color: #FF5656;
 }
 
-.redbtn:focus,
 .redbtn:active {
     background-color: #E54D4D;
 }
@@ -841,7 +837,6 @@ a:active {
     border: 1px solid rgba(255, 255, 255, 1);
 }
 
-.graybtn:focus,
 .graybtn:active {
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 1);
@@ -854,7 +849,7 @@ a:active {
 }
 
 .graybtn:hover {
-    background-color: rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0.06);
 }
 
 .modal-backdrop {
@@ -940,6 +935,154 @@ a:active {
     line-height: 20px;
 }
 
+.navfont2 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 25px;
+}
+
+.navfont3 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 150%;
+}
+
+.navfont4 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 25px;
+}
+
+.nav-tabs .nav-link {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+    border-color: #ff0;
+    isolation: isolate;
+}
+
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+    background-color: #ff0;
+    border-color: #ff0;
+}
+
+.font10 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFF00;
+}
+
+.font10:hover {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    text-align: center;
+    color: #FFFF00;
+}
+
+.navborder {
+    border: 1px solid #FFFF00;
+    border-radius: 6px;
+}
+
+
+.form-control {
+    color: #ffffff;
+    background: rgba(58, 58, 58, 1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 109, 253, 0);
+}
+
+.form-control:focus {
+    color: #ffffff;
+    background: rgba(58, 58, 58, 1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 109, 253, 0);
+}
+
+.font11 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.font12 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 20px;
+}
+
+.font13 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 20px;
+}
+
+.font14 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 100;
+    font-size: 11px;
+    line-height: 20px;
+}
+
+.font15 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 150%;
+    color: white;
+}
+
+.font15act {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 150%;
+    color: #ff0;
+}
+
+.deta {
+    height: 400px;
+}
+
+.navmobile {
+    width: fit-content;
+}
+
 
 @media (max-width: 990px) {
     .font5 {
@@ -978,3 +1121,25 @@ a:active {
         font-size: 25px;
     }
 }
+
+
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #272727;
+}
+
+::-webkit-scrollbar-thumb {
+    border: 4px solid #272727;
+    background: #888;
+    border-radius: 25px
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+
