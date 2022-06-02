@@ -370,7 +370,7 @@ async function loadTokens() {
         tokens.forEach(async tokenId => {
 
             document.getElementById("ownedTokens").innerHTML += `
-    <div class="col-12 col-md-6 col-lg-6">
+    <div class="col-12 col-sm-8 col-md-5 col-lg-4 col-xl-6">
             <div class="rounded m-2 pb-5 bg2 row justify-content-center">
                 <div>
                     <div id="token-${tokenId}" class="position-relative my-2 mt-3 mx-auto rounded-3 widthfit"style="border:2px solid rgb(0 0 0 / 0%)">
@@ -400,7 +400,7 @@ async function loadTokens() {
                 let circle5 = (tokenData.passedTime >= 5 * 24 * 60 * 60) ? "color1" : "color2";
                 let circle15 = (tokenData.passedTime >= 15 * 24 * 60 * 60) ? "color1" : "color2";
                 let circle30 = (tokenData.passedTime >= 30 * 24 * 60 * 60) ? "color1" : "color2";
-                document.getElementById("stakedTokens").innerHTML += `<div class="col-12 col-md-6 col-lg-4">
+                document.getElementById("stakedTokens").innerHTML += `<div class="col-12 col-sm-8 col-md-5 col-lg-4 col-xl-4">
                 <div class="rounded m-2 bg2 row justify-content-center">
                     <div>
                         <div id="token-${tokenId}" class="position-relative my-2 mt-3 mx-auto rounded-3 widthfit"style="border:2px solid rgb(0 0 0 / 0%)">
