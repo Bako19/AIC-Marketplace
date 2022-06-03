@@ -1171,6 +1171,47 @@ a:active {
     line-height: 150%;
 }
 
+.font27 {
+    text-decoration: none;
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 20%;
+}
+
+.font28 {
+    text-decoration: none;
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 150%;
+}
+
+.font29 {
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 100%;
+    color: #ff0;
+    text-decoration-color: #ff0;
+}
+
+.font29:hover {
+    text-decoration: none;
+}
+
+.font30 {
+    text-decoration: none;
+    font-family: 'Obviously';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 150%;
+}
+
 .cardimg {
     bottom: 0;
     transform: translate(0%, 50%);
@@ -1349,6 +1390,6 @@ a:active {
     position: absolute;
     top: 50%;
     left: 0;
-    transform: translate(0%,-50%);
+    transform: translate(0%, -50%);
     z-index: -100;
 }
