@@ -764,6 +764,10 @@ a:active {
     background-color: #363636;
 }
 
+.bg5 {
+    background-color: #121212;
+}
+
 .progressfont {
     font-family: 'Obviously';
     font-style: normal;
@@ -1249,6 +1253,14 @@ a:active {
 
 .accordion-button:not(.collapsed)::after {
     background-image: url(../images/accordion2.svg);
+}
+
+.mobilenavbrand{
+    padding-left: 20px;
+}
+
+.mobilenavbrandimg{
+    max-width: 38px;
 }
 
 @media (max-width: 990px) {
