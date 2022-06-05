@@ -799,7 +799,7 @@ a:active {
 }
 
 .tier {
-    background-color: rgba(255, 255, 0, 0.229);
+    background: rgba(255, 255, 0, 0.12);
     color: #ff0;
     font-family: 'Obviously';
     font-style: normal;
@@ -807,6 +807,10 @@ a:active {
     font-size: 11px;
     line-height: 20px;
     max-width: 120px;
+}
+
+.tier {
+    background: rgba(255, 255, 0, 0.18);
 }
 
 .checkpos {
