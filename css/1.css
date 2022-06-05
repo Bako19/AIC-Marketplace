@@ -671,6 +671,7 @@ a:active {
     position: fixed;
     bottom: 0px;
     margin: 0%;
+    width: 100%;
     padding: 0%;
 }
 
@@ -752,6 +753,10 @@ a:active {
     background-color: #313131;
 }
 
+.bbg2 {
+    background-color: #313131;
+}
+
 .bg2:hover {
     background-color: #363636;
 }
@@ -798,7 +803,7 @@ a:active {
     color: #ff0;
     font-family: 'Obviously';
     font-style: normal;
-    font-weight: 550;
+    font-weight: 200;
     font-size: 11px;
     line-height: 20px;
     max-width: 120px;
@@ -922,13 +927,13 @@ a:active {
     font-family: 'Obviously';
     font-style: normal;
     font-weight: 670;
-    font-size: 18px;
-    line-height: 28px;
+    font-size: 13px;
+    line-height: 20px;
 }
 
 .font9 {
     font-family: "obviously", sans-serif;
-    font-size: 13px;
+    font-size: 11px;
 }
 
 .filterheadfont {
@@ -1216,6 +1221,12 @@ a:active {
     line-height: 150%;
 }
 
+.font31 {
+    font-family: "obviously-wide", sans-serif;
+    font-style: normal;
+    font-weight: 700;
+}
+
 .cardimg {
     bottom: 0;
     transform: translate(0%, 50%);
@@ -1255,11 +1266,11 @@ a:active {
     background-image: url(../images/accordion2.svg);
 }
 
-.mobilenavbrand{
+.mobilenavbrand {
     padding-left: 20px;
 }
 
-.mobilenavbrandimg{
+.mobilenavbrandimg {
     max-width: 38px;
 }
 
@@ -1309,6 +1320,10 @@ a:active {
     .progresscircle {
         width: 25px;
         height: 25px;
+    }
+
+    .font31 {
+        font-size: 9px;
     }
 }
 
