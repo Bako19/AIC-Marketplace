@@ -264,8 +264,8 @@ async function fetchProfile() {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
-        
-        
+
+
         document.getElementById("walletAddress-sm").value = selectedAccount;
         document.getElementById("walletAddress-lg").value = selectedAccount;
 
@@ -284,6 +284,71 @@ async function fetchProfile() {
         document.getElementById("email-lg").value = res.data.profile.email;
     }
 }
+
+async function updateProfile_sm() {
+    let res = await axios.post("http://localhost:3000/updateProfile/", {
+        token: localStorage.getItem("auth"),
+        newProfile: {
+            discord: document.getElementById("discord-sm").value,
+            twitter: document.getElementById("twitter-sm").value,
+            wlAddress: document.getElementById("wlAddress-sm").value,
+            email: document.getElementById("email-sm").value
+        }
+    })
+    if (res.data.error == undefined) {
+        alert("updated")
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    }
+}
+
+
+async function updateProfile_lg() {
+    let res = await axios.post("http://localhost:3000/updateProfile/", {
+        token: localStorage.getItem("auth"),
+        newProfile: {
+            discord: document.getElementById("discord-lg").value,
+            twitter: document.getElementById("twitter-lg").value,
+            wlAddress: document.getElementById("wlAddress-lg").value,
+            email: document.getElementById("email-lg").value
+        }
+    })
+    if (res.data.error == undefined) {
+        alert("updated")
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    }
+}
+
+
 async function connect() {
     if (window.web3 == undefined && window.ethereum == undefined) {
         window
@@ -303,9 +368,9 @@ async function connect() {
     if (localStorage.getItem("auth") == null) {
         const web3 = new Web3(provider);
         let time = Math.floor(new Date().getTime() / 1000)
-        let signature = await web3.eth.personal.sign(`${selectedAccount}+${time}`, selectedAccount);
+        let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
         let res = await axios.post("http://localhost:3000/auth/", {
-            wallet: selectedAccount,
+            wallet: selectedAccount.toLowerCase(),
             signature: signature,
             time: time
         })
@@ -318,16 +383,16 @@ async function connect() {
 
     } else {
         let res = await axios.post("http://localhost:3000/isAuthValid/", {
-            wallet: selectedAccount,
+            wallet: selectedAccount.toLowerCase(),
             token: localStorage.getItem("auth")
         })
         if (res.data.authenticated == false) {
             localStorage.clear();
             const web3 = new Web3(provider);
             let time = Math.floor(new Date().getTime() / 1000)
-            let signature = await web3.eth.personal.sign(`${selectedAccount}+${time}`, selectedAccount);
+            let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
             let res = await axios.post("http://localhost:3000/auth/", {
-                wallet: selectedAccount,
+                wallet: selectedAccount.toLowerCase(),
                 signature: signature,
                 time: time
             })
