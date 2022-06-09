@@ -7,6 +7,9 @@ let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
 
+
+let agentsStaked = {};
+
 let contractAddress = "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4";
 let mainContractAddress = "0xB54984BEBDA259e5f52191fAA2D234692775a2aE";
 let abi = [{
@@ -325,30 +328,59 @@ async function fetchProfile() {
     }
 }
 
-async function fetchItems(maxTier, agents) {
+async function fetchItems() {
     const web3 = new Web3(provider);
     const stakingContract = new web3.eth.Contract(abi, contractAddress);
     let tokensStaked = await stakingContract.methods.tokensStakedBy(selectedAccount).call();
     let tokensStakedIds = [];
-    tokensStaked.forEach((state, tokenId) => {
+    let highestTier = 0;
+
+    tokensStaked.forEach(async (state, tokenId) => {
         if (state == true) {
             tokensStakedIds.push(tokenId + 1)
+            let tokenData = await stakingContract.methods.checkStakeTierOfToken(tokenId + 1).call();
+            agentsStaked[`${tokenId + 1}k`] = {
+                tier: tokenData.tierId
+            };
+            if (tokenData.tierId > highestTier) {
+                highestTier = 1
+            }
         }
     })
-console.log(tokensStakedIds)
 
-    let res = await axios.post("http://localhost:3000/getItems/", {
+
+
+    axios.post("http://localhost:3000/getItems/", {
         token: localStorage.getItem("auth")
+    }).then(res => {
+        
+    }).finally(re=>{
+        console.log("5")
     })
 
-    
-    if (res.data.authenticated !== false) {
 
-     
-        res.data.items.forEach(item => {
-          console.log(item)
+
+    axios.post("http://localhost:3000/checkAgentsClaimDate/", {
+        token: localStorage.getItem("auth"),
+        agents: tokensStakedIds
+    }).then(res => {
+
+
+        Object.keys(agentsStaked).forEach(agentId=>{
+           console.log(agentId)
+            if(res.data.agents[agentId] !== undefined){
+                agentsStaked[agentId].claimTime =  res.data.agents[agentId];
+            }else{
+                agentsStaked[agentId].claimTime = 0;
+            }
         })
-    }
+
+        console.log(agentsStaked)
+        if (res.data.authenticated !== false) {
+    
+        }
+    })
+
 }
 
 async function updateProfile_sm() {
