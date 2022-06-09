@@ -182,7 +182,25 @@ async function onConnect() {
 }
 
 
-
+function getDateFromUnix(unixTime) {
+    let date = new Date(unixTime * 1000);
+    let day = date.getDate()
+    let months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    switch (day) {
+        case 1:
+        case 21:
+        case 31:
+            return day + 'st ' + months[date.getMonth()] + ", " + date.getFullYear()
+        case 2:
+        case 22:
+            return day + 'nd ' + months[date.getMonth()] + ", " + date.getFullYear()
+        case 3:
+        case 23:
+            return day + 'rd ' + months[date.getMonth()] + ", " + date.getFullYear()
+        default:
+            return day + 'th ' + months[date.getMonth()] + ", " + date.getFullYear()
+    }
+}
 
 async function toggleBorder(id, type) {
     if (document.getElementById("checkboxOf-" + id).checked) {
@@ -257,15 +275,61 @@ async function toggleCheckBox(id, type) {
 }
 
 
+async function fetchHistory() {
+    let res = await axios.post("http://localhost:3000/getHistory/", {
+        token: localStorage.getItem("auth")
+    })
+    if (res.data.authenticated !== false) {
+        document.getElementById("history-lg").innerHTML = "";
+        document.getElementById("history-sm").innerHTML = "";
+        res.data.history.forEach(item => {
+            let newItem = `<div class="row">
+        <div class="col-3 mb-3">
+            <img class="rounded w-100" src="${item.image}" alt="${item.name}">
+        </div>
+        <div class="col-9 text-start my-auto">
+            <p class="font13">${item.name}</p>
+            <p class="font14">Claim date : ${getDateFromUnix(item.claimTime)}
+            </p>
+        </div>
+        </div>`
 
+            document.getElementById("history-sm").innerHTML += newItem;
+            document.getElementById("history-lg").innerHTML += newItem;
+        })
+    }
+
+}
 
 async function fetchProfile() {
     let res = await axios.post("http://localhost:3000/getProfile/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
 
 
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    }
+}
+
+async function fetchItems(maxTier,agents) {
+    let res = await axios.post("http://localhost:3000/getItems/", {
+        token: localStorage.getItem("auth")
+    })
+    if (res.data.authenticated !== false) {
         document.getElementById("walletAddress-sm").value = selectedAccount;
         document.getElementById("walletAddress-lg").value = selectedAccount;
 
@@ -379,6 +443,7 @@ async function connect() {
             localStorage.setItem("address", res.data.address);
             localStorage.setItem("time", time);
             fetchProfile();
+            fetchHistory();
         }
 
     } else {
@@ -401,9 +466,11 @@ async function connect() {
                 localStorage.setItem("address", res.data.address);
                 localStorage.setItem("time", time);
                 fetchProfile();
+                fetchHistory();
             }
         } else {
             fetchProfile();
+            fetchHistory();
         }
     }
 
