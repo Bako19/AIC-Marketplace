@@ -7,8 +7,8 @@ let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
 
-let contractAddress = "0x3A4F04F639E91570Eb86050886439eB9Fb20b68c";
-let mainContractAddress = "0x0c754233A2C3133aD6235686c2D694Caca793339";
+let contractAddress = "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
+let mainContractAddress = "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
 let abi = [{
         "inputs": [{
             "internalType": "address",
@@ -213,7 +213,7 @@ async function onConnect() {
 async function connect() {
     if (window.web3 == undefined && window.ethereum == undefined) {
         window
-            .open("https://metamask.app.link/dapp/ebgnft.xyz", "_blank")
+            .open("https://metamask.app.link/dapp/artificialintelligenceclub.io", "_blank")
             .focus();
     }
     provider = await web3Modal.connect();
@@ -367,7 +367,7 @@ async function loadTokens() {
     const contract = new web3.eth.Contract(abi, contractAddress);
     contract.methods.tokensOwnedBy(selectedAccount).call().then(tokens => {
         document.getElementById("ownedTokens").innerHTML = "";
-        tokens.forEach(async tokenId => {
+        tokens.forEach(tokenId => {
 
             document.getElementById("ownedTokens").innerHTML += `
     <div class="col-12 col-sm-8 col-md-5 col-lg-4 col-xl-6">
@@ -387,6 +387,10 @@ async function loadTokens() {
             </div>
         </div>`
         })
+        if (document.getElementById("ownedTokens").innerHTML == "") {
+            document.getElementById("ownedTokens").innerHTML = `<h6 class="font3 my-5">No agents owned</h6>`
+        }
+
     })
 
 
@@ -476,6 +480,9 @@ async function loadTokens() {
             </div>`
             }
         })
+        if (document.getElementById("stakedTokens").innerHTML == "") {
+            document.getElementById("stakedTokens").innerHTML = `<h6 class="font3 my-5">No agents staked</h6>`
+        }
     })
 }
 
@@ -585,7 +592,7 @@ async function unstake() {
 
 async function loadSeasonEnds() {
     try {
-        const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/5ad686d1f5ab4565a30a8ae793e209bc'));
+        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/5ad686d1f5ab4565a30a8ae793e209bc'));
         const stakingContract = new web3.eth.Contract(abi, contractAddress);
         let time = await stakingContract.methods.currentSeasonStartTime().call();
 

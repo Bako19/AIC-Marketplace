@@ -16,7 +16,7 @@
 </head>
 
 <body style="position: relative;">
-    
+
     <nav id="navbar" class=" navbar navbar-expand-lg navbg fixed-top p-0 border-bottom">
         <div class="container-fluid pt-2 my-0">
             <div class="navbar-brand navbr">
@@ -45,7 +45,8 @@
 
             <div class="modal fade" id="disconnect" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered modal-sm" style="z-index: 1500;" role="document">
+                <div class="modal-dialog modal-dialog-centered" style="z-index: 1500;"
+                    role="document">
                     <div class="modal-content rounded-3 bg1">
                         <div class="modal-header py-0 pt-4 m-start text-light border-0 bg1">
                             <p></p>
@@ -69,14 +70,13 @@
                             <button type="button" style="font-size: 20px;"
                                 class="col-5 btn btnn graybtn text-light py-3 close" data-dismiss="modal"
                                 aria-label="Close">CANCEL</button>
-                            <button type="button" style="font-size: 20px;"
-                                class="col-5 btn btnn redbtn py-3"onclick="disconnect();"data-dismiss="modal"
-                                aria-label="Close">DISCONNECT</button>
+                            <button type="button" style="font-size: 20px;" class="col-5 btn btnn redbtn py-3"
+                                onclick="disconnect();" data-dismiss="modal" aria-label="Close">DISCONNECT</button>
                         </div>
                     </div>
                 </div>
             </div>
-  
+
         </div>
 
 
@@ -99,12 +99,11 @@
                         <div class="row justify-content-around py-3">
                             <h5 class="col-12 col-lg-5 py-2 my-lg-auto text-center text-lg-start font5">UNSTAKED</h5>
                             <div class="col-lg-7 col-xl-6 row justify-content-around justify-content-lg-end my-auto">
-                                <button
-                                    class="btn text-light border-secondary col-5 col-lg-7 hbtn1 font1  btnn graybtn" onclick="stakeAll();">STAKE
+                                <button class="btn text-light border-secondary col-5 col-lg-7 hbtn1 font1  btnn graybtn"
+                                    onclick="stakeAll();">STAKE
                                     ALL</button>
-                                <button
-                                    class="btn text-light border-secondary col-5 col-lg-4 hbtn2 font1 btnn graybtn" onclick="stake();"id="stakeButton"
-                                    disabled="">STAKE</button>
+                                <button class="btn text-light border-secondary col-5 col-lg-4 hbtn2 font1 btnn graybtn"
+                                    onclick="stake();" id="stakeButton" disabled="">STAKE</button>
                             </div>
                         </div>
                     </div>
@@ -122,12 +121,11 @@
                         <div class="row justify-content-around  py-3">
                             <h5 class="col-12 col-lg-5 py-2 my-lg-auto text-center text-lg-start font5">STAKED</h5>
                             <div class="col-lg-7 col-xl-6 row justify-content-around justify-content-lg-end my-auto">
-                                <button
-                                    class="btn text-light border-secondary col-6 col-lg-7 font1 btnn graybtn hbtn1" onclick="unstakeAll();">UNSTAKE
+                                <button class="btn text-light border-secondary col-6 col-lg-7 font1 btnn graybtn hbtn1"
+                                    onclick="unstakeAll();">UNSTAKE
                                     ALL</button>
-                                <button
-                                    class="btn text-light border-secondary col-5 col-lg-4 font1 btnn graybtn hbtn2" onclick="unstake();" id="unstakeButton"
-                                    disabled="">UNSTAKE</button>
+                                <button class="btn text-light border-secondary col-5 col-lg-4 font1 btnn graybtn hbtn2"
+                                    onclick="unstake();" id="unstakeButton" disabled="">UNSTAKE</button>
                             </div>
                         </div>
                     </div>
@@ -172,6 +170,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.0.0-alpha.1/axios.min.js"
+        integrity="sha512-xIPqqrfvUAc/Cspuj7Bq0UtHNo/5qkdyngx6Vwt+tmbvTLDszzXM0G6c91LXmGrRx8KEPulT+AfOOez+TeVylg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script>
     <script src="../js/web3modal.js"></script>
     <script src="../js/images.js"></script>
