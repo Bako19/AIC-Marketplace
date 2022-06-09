@@ -7,8 +7,8 @@ let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
 
-let contractAddress = "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
-let mainContractAddress = "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
+let contractAddress = "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4";
+let mainContractAddress = "0xB54984BEBDA259e5f52191fAA2D234692775a2aE";
 let abi = [{
         "inputs": [{
             "internalType": "address",
@@ -325,27 +325,29 @@ async function fetchProfile() {
     }
 }
 
-async function fetchItems(maxTier,agents) {
+async function fetchItems(maxTier, agents) {
+    const web3 = new Web3(provider);
+    const stakingContract = new web3.eth.Contract(abi, contractAddress);
+    let tokensStaked = await stakingContract.methods.tokensStakedBy(selectedAccount).call();
+    let tokensStakedIds = [];
+    tokensStaked.forEach((state, tokenId) => {
+        if (state == true) {
+            tokensStakedIds.push(tokenId + 1)
+        }
+    })
+console.log(tokensStakedIds)
+
     let res = await axios.post("http://localhost:3000/getItems/", {
         token: localStorage.getItem("auth")
     })
+
+    
     if (res.data.authenticated !== false) {
-        document.getElementById("walletAddress-sm").value = selectedAccount;
-        document.getElementById("walletAddress-lg").value = selectedAccount;
 
-        document.getElementById("discord-sm").value = res.data.profile.discord;
-        document.getElementById("discord-lg").value = res.data.profile.discord;
-
-        document.getElementById("twitter-sm").value = res.data.profile.twitter;
-        document.getElementById("twitter-lg").value = res.data.profile.twitter;
-
-
-        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
-        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
-
-
-        document.getElementById("email-sm").value = res.data.profile.email;
-        document.getElementById("email-lg").value = res.data.profile.email;
+     
+        res.data.items.forEach(item => {
+          console.log(item)
+        })
     }
 }
 
@@ -444,6 +446,7 @@ async function connect() {
             localStorage.setItem("time", time);
             fetchProfile();
             fetchHistory();
+            fetchItems();
         }
 
     } else {
@@ -467,10 +470,12 @@ async function connect() {
                 localStorage.setItem("time", time);
                 fetchProfile();
                 fetchHistory();
+                fetchItems();
             }
         } else {
             fetchProfile();
             fetchHistory();
+            fetchItems();
         }
     }
 
