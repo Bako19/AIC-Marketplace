@@ -6,7 +6,7 @@ let selectedAccount;
 let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
-
+let agentsSelected = {};
 
 let agentsStaked = {};
 
@@ -205,8 +205,8 @@ function getDateFromUnix(unixTime) {
     }
 }
 
-async function toggleBorder(id, type) {
-    if (document.getElementById("checkboxOf-" + id).checked) {
+async function toggleBorder(id) {
+    if (document.getElementById(id).checked) {
         if (type == "s") {
             selectedStakedAgents.push(id);
         } else {
@@ -380,6 +380,30 @@ async function fetchItems() {
                     isClaimable = false;
                 }
 
+
+                let agentsAvailable = "";
+                Object.keys(agentsStaked).forEach(agentId => {
+                    if (agentsStaked[agentId].tierId >= item.tierId) {
+                        agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
+<div id="a${agentId}-i${item.id}" class="position-relative my-2 mt-3 rounded-3">
+    <div class="form-check position-absolute checkpos">
+        <input
+            class="form-check-input rounded-circle selectable1"
+            onclick="toggleBorder('a${agentId}-i${item.id}')" type="radio"name="flexRadioDefault"
+            value="" id="check1">
+    </div>
+    <a class="btn p-0" href="#"onclick="toggleBorder('a${agentId}-i${item.id}')">
+    <img class="rounded w-100" src="${imagesUrls[agentId]}"  alt="">
+    </a>
+    
+</div>
+<p class="text-center tier px-2 rounded-pill widthfit mx-auto">
+    Stake Tier ${agentsStaked[agentId].tierId}</p>
+</div>`
+                    }
+                })
+
+
                 document.getElementById("marketplace-items").innerHTML += `
                 <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
                             <div class="rounded cardbg ">
@@ -416,10 +440,7 @@ async function fetchItems() {
                                                         <p class="font2">Please select the agent you would like to use to claim
                                                             this item:</p>
                                                         <div class="row">
-                                                           
-                       
-
-
+                                                           ${agentsAvailable}
                                                         </div>
                                                     </div>
                                                 </div>
