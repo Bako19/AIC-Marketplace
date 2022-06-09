@@ -339,47 +339,56 @@ async function fetchItems() {
         if (state == true) {
             tokensStakedIds.push(tokenId + 1)
             let tokenData = await stakingContract.methods.checkStakeTierOfToken(tokenId + 1).call();
-            agentsStaked[`${tokenId + 1}k`] = {
-                tier: tokenData.tierId
-            };
-            if (tokenData.tierId > highestTier) {
-                highestTier = 1
-            }
+
+            axios.post("http://localhost:3000/checkAgentClaimTime/", {
+                token: localStorage.getItem("auth"),
+                agentId: tokenId + 1
+            }).then(res => {
+
+                agentsStaked[tokenId + 1] = {
+                    tier: tokenData.tierId,
+                    claimtime: res.data.claimTime
+                };
+                if (tokenData.tierId > highestTier) {
+                    highestTier = 1
+                }
+            })
+
         }
     })
 
-
+console.log(agentsStaked)
 
     axios.post("http://localhost:3000/getItems/", {
         token: localStorage.getItem("auth")
     }).then(res => {
-        
-    }).finally(re=>{
+
+    }).finally(re => {
         console.log("5")
     })
 
 
 
-    axios.post("http://localhost:3000/checkAgentsClaimDate/", {
+    /*axios.post("http://localhost:3000/checkAgentsClaimDate/", {
         token: localStorage.getItem("auth"),
         agents: tokensStakedIds
     }).then(res => {
 
 
-        Object.keys(agentsStaked).forEach(agentId=>{
-           console.log(agentId)
-            if(res.data.agents[agentId] !== undefined){
-                agentsStaked[agentId].claimTime =  res.data.agents[agentId];
-            }else{
+        Object.keys(agentsStaked).forEach(agentId => {
+            console.log(agentId)
+            if (res.data.agents[agentId] !== undefined) {
+                agentsStaked[agentId].claimTime = res.data.agents[agentId];
+            } else {
                 agentsStaked[agentId].claimTime = 0;
             }
         })
 
         console.log(agentsStaked)
         if (res.data.authenticated !== false) {
-    
+
         }
-    })
+    })*/
 
 }
 
