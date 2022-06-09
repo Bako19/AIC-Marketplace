@@ -263,7 +263,26 @@ async function fetchProfile() {
     let res = await axios.post("http://localhost:3000/getProfile/", {
         token: localStorage.getItem("auth")
     })
-    console.log(res.data)
+    if (res.data.authenticated !== false) {
+        
+        
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    }
 }
 async function connect() {
     if (window.web3 == undefined && window.ethereum == undefined) {
@@ -363,7 +382,7 @@ async function disconnect() {
 
 }
 
-window.addEventListener("load", async() => {
+window.addEventListener("load", async () => {
     init();
 
 })
