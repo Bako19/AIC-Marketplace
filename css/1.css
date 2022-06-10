@@ -1424,3 +1424,8 @@ a:active {
     transform: translate(0%, -50%);
     z-index: -100;
 }
+
+
+.form-check-input:checked[type=radio] {
+    background-image: url(../images/blackicon.png);
+}
