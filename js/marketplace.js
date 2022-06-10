@@ -205,77 +205,42 @@ function getDateFromUnix(unixTime) {
     }
 }
 
+
+
+
 async function toggleBorder(id) {
-    if (document.getElementById(id).checked) {
-        if (type == "s") {
-            selectedStakedAgents.push(id);
+    let radios = document.getElementsByName("checkbox-i" + id)
+    document.getElementById(`claim-${id}`).disabled = false;
+    radios.forEach(radio => {
+        if (radio.checked == true) {
+            console.log(radio.value)
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.border = "2px solid #ff0";
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.boxShadow = "0px 0px 5px #ff0";
         } else {
-            selectedOwnedAgents.push(id);
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.border = "2px solid rgb(0 0 0 / 0%)";
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.boxShadow = "0px 0px 5px rgb(0 0 0 / 0%)";
         }
-        document.getElementById("token-" + id).style.border = "2px solid #ff0";
-        document.getElementById("token-" + id).style.boxShadow = "0px 0px 5px #ff0";
-    } else {
-        if (type == "s") {
-            if (selectedStakedAgents.indexOf(id) !== -1) {
-                selectedStakedAgents.splice(selectedStakedAgents.indexOf(id), 1);
-            }
-        } else {
-            if (selectedOwnedAgents.indexOf(id) !== -1) {
-                selectedOwnedAgents.splice(selectedOwnedAgents.indexOf(id), 1);
-            }
-        }
-        document.getElementById("token-" + id).style.border = "2px solid rgb(0 0 0 / 0%)";
-        document.getElementById("token-" + id).style.boxShadow = "0px 0px 5px rgb(0 0 0 / 0%)";
-    }
-    if (selectedStakedAgents.length > 0) {
-        document.getElementById("unstakeButton").disabled = false
-    } else {
-        document.getElementById("unstakeButton").disabled = true
-    }
-
-    if (selectedOwnedAgents.length > 0) {
-        document.getElementById("stakeButton").disabled = false
-    } else {
-        document.getElementById("stakeButton").disabled = true
-    }
+    })
 }
-async function toggleCheckBox(id, type) {
-    document.getElementById("checkboxOf-" + id).checked = !document.getElementById("checkboxOf-" + id).checked;
+async function toggleCheckbox(id, itemId) {
 
-    if (document.getElementById("checkboxOf-" + id).checked) {
-        if (type == "s") {
-            selectedStakedAgents.push(id);
+    document.getElementById(id).checked = true
+    document.getElementById(`claim-${itemId}`).disabled = false;
+    let radios = document.getElementsByName("checkbox-i" + itemId)
+    radios.forEach(radio => {
+        if (radio.checked == true) {
+            console.log(radio.value)
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.border = "2px solid #ff0";
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.boxShadow = "0px 0px 5px #ff0";
         } else {
-            selectedOwnedAgents.push(id);
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.border = "2px solid rgb(0 0 0 / 0%)";
+            document.getElementById(radio.id.substring(1, radio.id.length)).style.boxShadow = "0px 0px 5px rgb(0 0 0 / 0%)";
         }
-        document.getElementById("token-" + id).style.border = "2px solid #ff0";
-        document.getElementById("token-" + id).style.boxShadow = "0px 0px 5px #ff0";
-    } else {
-        if (type == "s") {
-            if (selectedStakedAgents.indexOf(id) !== -1) {
-                selectedStakedAgents.splice(selectedStakedAgents.indexOf(id), 1);
-            }
-        } else {
-
-            if (selectedOwnedAgents.indexOf(id) !== -1) {
-                selectedOwnedAgents.splice(selectedOwnedAgents.indexOf(id), 1);
-            }
-        }
-        document.getElementById("token-" + id).style.border = "2px solid rgb(0 0 0 / 0%)";
-        document.getElementById("token-" + id).style.boxShadow = "0px 0px 5px rgb(0 0 0 / 0%)";
-    }
-    if (selectedStakedAgents.length > 0) {
-        document.getElementById("unstakeButton").disabled = false
-    } else {
-        document.getElementById("unstakeButton").disabled = true
-    }
-
-    if (selectedOwnedAgents.length > 0) {
-        document.getElementById("stakeButton").disabled = false;
-    } else {
-        document.getElementById("stakeButton").disabled = true;
-    }
+    })
 }
+
+
+
 
 
 async function fetchHistory() {
@@ -304,6 +269,35 @@ async function fetchHistory() {
 
 }
 
+async function claimItem(itemId) {
+    let tokenId;
+    console.log(itemId)
+    let radios = document.getElementsByName("checkbox-i" + itemId)
+    console.log(radios)
+    radios.forEach(radio => {
+        if (radio.checked == true) {
+            console.log(radio.value)
+            tokenId = radio.value
+        }else{
+            console.log(radio.value)
+        }
+    })
+
+    if (tokenId == undefined) {
+        alert("No agent selected");
+        return
+    }
+
+    let res = await axios.post("http://localhost:3000/claimItem/", {
+        token: localStorage.getItem("auth"),
+        itemId: itemId,
+        tokenId: tokenId
+    })
+    if (res.data.error == false) {
+        console.log("claimed");
+        alert("claimed")
+    }
+}
 async function fetchProfile() {
     let res = await axios.post("http://localhost:3000/getProfile/", {
         token: localStorage.getItem("auth")
@@ -351,12 +345,12 @@ async function fetchItems() {
             }
             if (res.data.agents[tokensStakedIds[index]] !== undefined) {
                 agentsStaked[tokensStakedIds[index]] = {
-                    claimtime: res.data.agents[tokensStakedIds[index]],
+                    claimTime: res.data.agents[tokensStakedIds[index]],
                     tierId: tokenData.tierId
                 }
             } else {
                 agentsStaked[tokensStakedIds[index]] = {
-                    claimtime: 0,
+                    claimTime: 0,
                     tierId: tokenData.tierId
                 };
             }
@@ -375,24 +369,27 @@ async function fetchItems() {
                 if (item.quantityLeft <= 0) {
                     isClaimable = false;
                 }
-
                 if (item.tierId > highestTier) {
+                    isClaimable = false;
+                }
+                if (item.claimed) {
                     isClaimable = false;
                 }
 
 
                 let agentsAvailable = "";
-                Object.keys(agentsStaked).forEach(agentId => {
-                    if (agentsStaked[agentId].tierId >= item.tierId) {
+                Object.keys(agentsStaked).forEach((agentId, index) => {
+
+                    if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60)) {
                         agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
-<div id="a${agentId}-i${item.id}" class="position-relative my-2 mt-3 rounded-3">
-    <div class="form-check position-absolute checkpos">
+<div id="${index}-${item.id}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
+    <div class="form-check position-absolute checkpos p-0">
         <input
             class="form-check-input rounded-circle selectable1"
-            onclick="toggleBorder('a${agentId}-i${item.id}')" type="radio"name="flexRadioDefault"
-            value="" id="check1">
+            onclick="toggleBorder('${item.id}');" type="radio" name="checkbox-i${item.id}"
+            value="${agentId}" id="c${index}-${item.id}">
     </div>
-    <a class="btn p-0" href="#"onclick="toggleBorder('a${agentId}-i${item.id}')">
+    <a class="btn p-0" href="#" onclick="toggleCheckbox('c${index}-${item.id}','${item.id}')">
     <img class="rounded w-100" src="${imagesUrls[agentId]}"  alt="">
     </a>
     
@@ -448,7 +445,7 @@ async function fetchItems() {
                                                     <button type="button"
                                                         class="btn btnn yellowbtn2 font31 p-2 mx-2 text-light close"
                                                         data-dismiss="modal" aria-label="Close">CANCEL</button>
-                                                    <button type="button" class="btn btnn yellowbtn font31 p-2">CLAIM
+                                                    <button type="button" class="btn btnn yellowbtn font31 p-2" onclick="claimItem('${item.id}');" id="claim-${item.id}" disabled>CLAIM
                                                         ITEM</button>
                                                 </div>
                                             </div>
