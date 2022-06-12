@@ -239,6 +239,76 @@ async function toggleCheckbox(id, itemId) {
 
 
 
+async function updateProfile_sm() {
+    toastr.info("Updating");
+    let res = await axios.post("http://localhost:3000/updateProfile/", {
+        token: localStorage.getItem("auth"),
+        newProfile: {
+            discord: document.getElementById("discord-sm").value,
+            twitter: document.getElementById("twitter-sm").value,
+            wlAddress: document.getElementById("wlAddress-sm").value,
+            email: document.getElementById("email-sm").value
+        }
+    })
+    if (res.data.error == undefined) {
+        toastr.success("Updated");
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    }else {
+       
+        toastr.error(res.data.desc);
+    }
+}
+
+
+async function updateProfile_lg() {
+    toastr.info("Updating");
+    let res = await axios.post("http://localhost:3000/updateProfile/", {
+        token: localStorage.getItem("auth"),
+        newProfile: {
+            discord: document.getElementById("discord-lg").value,
+            twitter: document.getElementById("twitter-lg").value,
+            wlAddress: document.getElementById("wlAddress-lg").value,
+            email: document.getElementById("email-lg").value
+        }
+    })
+    if (res.data.error == undefined) {
+        toastr.success("Updated");
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    }else {
+        
+        toastr.error(res.data.desc);
+    }
+}
 
 
 async function fetchHistory() {
@@ -269,6 +339,34 @@ async function fetchHistory() {
 
 }
 
+
+async function fetchProfile() {
+    let res = await axios.post("http://localhost:3000/getProfile/", {
+        token: localStorage.getItem("auth")
+    })
+    if (res.data.authenticated !== false) {
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    } else {
+        toastr.error(res.data.desc);
+    }
+}
+
+
 async function claimItem(itemId) {
     toastr.info("Claiming item");
     let tokenId;
@@ -298,32 +396,6 @@ async function claimItem(itemId) {
         toastr.error(res.data.desc);
     }
 }
-async function fetchProfile() {
-    let res = await axios.post("http://localhost:3000/getProfile/", {
-        token: localStorage.getItem("auth")
-    })
-    if (res.data.authenticated !== false) {
-        document.getElementById("walletAddress-sm").value = selectedAccount;
-        document.getElementById("walletAddress-lg").value = selectedAccount;
-
-        document.getElementById("discord-sm").value = res.data.profile.discord;
-        document.getElementById("discord-lg").value = res.data.profile.discord;
-
-        document.getElementById("twitter-sm").value = res.data.profile.twitter;
-        document.getElementById("twitter-lg").value = res.data.profile.twitter;
-
-
-        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
-        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
-
-
-        document.getElementById("email-sm").value = res.data.profile.email;
-        document.getElementById("email-lg").value = res.data.profile.email;
-    } else {
-        toastr.error(res.data.desc);
-    }
-}
-
 async function fetchItems() {
     toastr.info("Fetching items");
     const web3 = new Web3(provider);
@@ -472,76 +544,6 @@ async function fetchItems() {
     })
 }
 
-async function updateProfile_sm() {
-    toastr.info("Updating");
-    let res = await axios.post("http://localhost:3000/updateProfile/", {
-        token: localStorage.getItem("auth"),
-        newProfile: {
-            discord: document.getElementById("discord-sm").value,
-            twitter: document.getElementById("twitter-sm").value,
-            wlAddress: document.getElementById("wlAddress-sm").value,
-            email: document.getElementById("email-sm").value
-        }
-    })
-    if (res.data.error == undefined) {
-        toastr.success("Updated");
-        document.getElementById("walletAddress-sm").value = selectedAccount;
-        document.getElementById("walletAddress-lg").value = selectedAccount;
-
-        document.getElementById("discord-sm").value = res.data.profile.discord;
-        document.getElementById("discord-lg").value = res.data.profile.discord;
-
-        document.getElementById("twitter-sm").value = res.data.profile.twitter;
-        document.getElementById("twitter-lg").value = res.data.profile.twitter;
-
-
-        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
-        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
-
-
-        document.getElementById("email-sm").value = res.data.profile.email;
-        document.getElementById("email-lg").value = res.data.profile.email;
-    }else {
-       
-        toastr.error(res.data.desc);
-    }
-}
-
-
-async function updateProfile_lg() {
-    toastr.info("Updating");
-    let res = await axios.post("http://localhost:3000/updateProfile/", {
-        token: localStorage.getItem("auth"),
-        newProfile: {
-            discord: document.getElementById("discord-lg").value,
-            twitter: document.getElementById("twitter-lg").value,
-            wlAddress: document.getElementById("wlAddress-lg").value,
-            email: document.getElementById("email-lg").value
-        }
-    })
-    if (res.data.error == undefined) {
-        toastr.success("Updated");
-        document.getElementById("walletAddress-sm").value = selectedAccount;
-        document.getElementById("walletAddress-lg").value = selectedAccount;
-
-        document.getElementById("discord-sm").value = res.data.profile.discord;
-        document.getElementById("discord-lg").value = res.data.profile.discord;
-
-        document.getElementById("twitter-sm").value = res.data.profile.twitter;
-        document.getElementById("twitter-lg").value = res.data.profile.twitter;
-
-
-        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
-        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
-
-
-        document.getElementById("email-sm").value = res.data.profile.email;
-        document.getElementById("email-lg").value = res.data.profile.email;
-    }else {
-        
-        toastr.error(res.data.desc);
-    }
-}
 
 
 async function connect() {

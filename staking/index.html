@@ -18,6 +18,9 @@
     <title>AIC Staking</title>
 </head>
 
+
+
+
 <body style="position: relative;">
 
     <nav id="navbar" class=" navbar navbar-expand-lg navbg fixed-top p-0 border-bottom">
@@ -37,55 +40,332 @@
                 </li>
             </ul>
 
-            <button id="connect-button" onclick="connect();" class="btn pb-2 btnn yellowbtn "><img
-                    src="../images/darkWallet.svg" alt="">
-                Connect
-                Wallet</button>
-            <button id="wallet-button" class="btn btnn graybtn text-light d-none" data-toggle="modal"
-                data-target="#disconnect"><img src="../images/whiteWallet.svg" alt="">
-                0x86b...e7a0</button>
+            <button class="btn pb-2 btnn yellowbtn d-none d-lg-flex" id="connect-button-lg" onclick="connect();"><img
+                src="../images/darkWallet.svg" alt=""> Connect
+            Wallet
+        </button>
 
+        <button class="btn pb-2 py-2 mx-2 btnn graybtn d-none" id="profile-button-lg" data-toggle="modal"
+            data-target="#profile-lg">
+            <img src="../images/whiteWallet.svg" alt=""></button>
 
-            <div class="modal fade" id="disconnect" tabindex="-1" role="dialog"
-                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" style="z-index: 1500;"
-                    role="document">
-                    <div class="modal-content rounded-3 bg1">
-                        <div class="modal-header py-0 pt-4 m-start text-light border-0 bg1">
-                            <p></p>
-                            <button type="button m-start"
-                                class="btn-close btn-close-white btnn graybtn font1 p-2 mx-2 text-light close border-0"
-                                data-dismiss="modal" aria-label="Close"></button>
+        <!-- START OF MODAL -->
+        <!-- START OF MODAL -->
+        <div class="modal fade" id="profile-lg" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable pt-0" role="document">
+                <div class="modal-content rounded-3 bg1">
+                    <div class="modal-header py-0 m-start text-light bbg2">
+                        <p class="mt-3 navfont4">USER PROFILE</p>
+                        <button type="button" class="btn-close btn-close-white text-light close border-0"
+                            data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body my-0 text-light text-center pt-0">
+                        <div class="w-100 bg1 sticky-top pt-3 pb-1">
+                            <ul class="nav nav-tabs mb-3 w-auto justify-content-center mx-sm-3 row navborder bg1 px-0"
+                                id="pills-tab" id="myTab" role="tablist">
+                                <li class="nav-item col-6 justify-content-center px-0" role="presentation">
+                                    <button class="nav-link w-100 font10 rounded-start active h-100" id="home-tab"
+                                        data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"
+                                        aria-controls="home" aria-selected="true">Edit
+                                        Details</button>
+                                </li>
+                                <li class="nav-item col-6 justify-content-center px-0" role="presentation">
+                                    <button class="nav-link w-100 font10 rounded-end h-100" id="history-lg-tab"
+                                        data-bs-toggle="tab" data-bs-target="#history-lg" type="button" role="tab"
+                                        aria-controls="history-lg" aria-selected="false">Purchase History</button>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="modal-body my-0 text-light text-center">
-                            <h1 style="font-family: 'Obviously';
-                                font-style: normal;
-                                font-weight: 600;
-                                font-size: 30px;
-                                line-height: 25px;"> DISCONNECT?</h1>
-                            <p class="mt-4" style="font-family: 'Obviously';
-                                font-style: normal;
-                                font-weight: 500;
-                                font-size: 18px;
-                                line-height: 150%;">Are you sure to want to disconnect your wallet?</p>
+                        <div class="tab-content text-light mx-sm-3" id="myTabContent">
+                            <div class="tab-pane fade show active deta" id="home" role="tabpanel"
+                                aria-labelledby="home-tab">
+                                <form class="text-start">
+                                    <div class="mb-3">
+                                        <label for="walletaddress" class="form-label font11">Wallet
+                                            Address</label>
+                                        <input type="text" class="form-control font12 bg-dark" id="walletAddress-lg"
+                                            disabled>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="discordusername" class="form-label font11">Discord
+                                            Username</label>
+                                        <input type="text" class="form-control font12" id="discord-lg">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="wladdress" class="form-label font11">WL Address</label>
+                                        <input type="text" class="form-control font12" id="wlAddress-lg">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="e-mailaddress" class="form-label font11">E-mail
+                                            address</label>
+                                        <input type="email" class="form-control font12" id="email-lg">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="twitterhandel" class="form-label font11">Twitter
+                                            Handel</label>
+                                        <input type="text" class="form-control font12" id="twitter-lg">
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="tab-pane fade deta" id="history-lg" role="tabpanel"
+                                aria-labelledby="history-lg-tab">
+
+                            </div>
                         </div>
-                        <div class="modal-footer justify-content-around ROW border-0">
-                            <button type="button" style="font-size: 20px;"
-                                class="col-5 btn btnn graybtn text-light py-3 close" data-dismiss="modal"
-                                aria-label="Close">CANCEL</button>
-                            <button type="button" style="font-size: 20px;" class="col-5 btn btnn redbtn py-3"
-                                onclick="disconnect();" data-dismiss="modal" aria-label="Close">DISCONNECT</button>
-                        </div>
+
+                    </div>
+                    <div class="modal-footer bbg2">
+                        <button type="button" class="btn btnn graybtn p-2 mx-2 text-light close"
+                            data-dismiss="modal" aria-label="Close">CANCEL</button>
+                        <button type="button" class="btn btnn yellowbtn p-2"
+                            onclick="updateProfile_lg();">CONFIRM</button>
                     </div>
                 </div>
             </div>
+        </div>
+        <!-- END OF MODAL -->
+        <!-- END OF MODAL -->
 
+
+
+
+
+        <button id="wallet-button-lg" class="btn btnn graybtn text-light d-none" data-toggle="modal"
+            data-target="#disconnect"><img src="../images/whiteWallet.svg" alt=""> 0x000...0000</button>
+
+        <!-- START OF MODAL -->
+        <!-- START OF MODAL -->
+        <div class="modal fade" id="disconnect" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content rounded-3 bg1">
+                    <div class="modal-header py-0 pt-4 m-start text-light border-0 bg1">
+                        <p></p>
+                        <button type="button m-start"
+                            class="btn-close btn-close-white btnn graybtn font1 p-2 mx-2 text-light close border-0"
+                            data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body my-0 text-light text-center pt-0">
+                        <h1 class="navfont2"> DISCONNECT?</h1>
+                        <p class="mt-4 navfont3">Are you sure to want to disconnect your wallet?</p>
+                    </div>
+                    <div class="modal-footer justify-content-around row border-0">
+                        <button type="button" style="font-size: 20px;"
+                            class="col-5 btn btnn graybtn text-light py-3 close" data-dismiss="modal"
+                            aria-label="Close">CANCEL</button>
+                        <button type="button" style="font-size: 20px;"
+                            class="col-5 btn btnn redbtn py-3" onclick="disconnect();" data-dismiss="modal">DISCONNECT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END OF MODAL -->
+        <!-- END OF MODAL -->
+
+
+
+        <button type="button" class="btn me-3 ms-auto d-flex d-lg-none" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">
+            <img src="../images/collapse.svg" alt="">
+        </button>
+
+        <div id="exampleModal" class="modal">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content">
+                    <div class="modal-header bg3 pb-0 pt-2 ps-2 border-bottom">
+                        <div class="navbar-brand">
+                            <a href="#" class="nav-link mobilenavbrand font pt-0">
+                                <img class="w-100 mx-2 mobilenavbrandimg" src="../images/mainLogo.svg" alt=""> AIC
+                            </a>
+                        </div>
+                        <button type="button" class="btn-close btn-close-white my-auto mx-3" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body bg1">
+
+
+                        <div class="d-flex justify-content-center">
+
+                            <button class="btn pb-2 btnn yellowbtn d-lg-none" onclick="connect();"
+                                id="connect-button-sm"><img src="../images/darkWallet.svg" alt="">
+                                Connect
+                                Wallet
+                            </button>
+
+
+                            <button class="btn pb-2 mx-2 btnn graybtn d-none" id="profile-button-sm"
+                                data-toggle="modal" data-target="#profile-sm"> <img src="../images/Vector (2).svg"
+                                    alt=""></button>
+
+                            <!-- START OF MODAL -->
+                            <!-- START OF MODAL -->
+                            <div class="modal fade" id="profile-sm" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered pt-0" role="document">
+                                    <div class="modal-content rounded-3 bg1">
+                                        <div class="modal-header py-0 m-start text-light bbg2">
+                                            <p class="mt-3 navfont4">USER PROFILE</p>
+                                            <button type="button"
+                                                class="btn-close btn-close-white text-light close border-0"
+                                                data-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body my-0 text-light text-center pt-0">
+                                            <div class="w-100 bg1 sticky-top pt-3 pb-1">
+                                                <ul class="nav nav-tabs mb-3 w-auto justify-content-center mx-sm-5 row navborder bg1 px-0"
+                                                    id="pills-tab" id="myTab" role="tablist">
+                                                    <li class="nav-item col-6 justify-content-center px-0"
+                                                        role="presentation">
+                                                        <button
+                                                            class="nav-link w-100 font10 rounded-start active h-100"
+                                                            id="home-sm-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#home-sm" type="button" role="tab"
+                                                            aria-controls="home" aria-selected="true">Edit
+                                                            Details</button>
+                                                    </li>
+                                                    <li class="nav-item col-6 justify-content-center px-0"
+                                                        role="presentation">
+                                                        <button class="nav-link w-100 font10 rounded-end h-100"
+                                                            id="history-sm-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#history-sm" type="button" role="tab"
+                                                            aria-controls="contact" aria-selected="false">Purchase
+                                                            History</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="tab-content text-light mx-sm-5" id="myTabContent">
+                                                <div class="tab-pane fade show active deta" id="home-sm"
+                                                    role="tabpanel" aria-labelledby="home-sm-tab">
+                                                    <form class="text-start">
+                                                        <div class="mb-3">
+                                                            <label for="walletaddress"
+                                                                class="form-label font11">Wallet
+                                                                Address</label>
+                                                            <input type="text" class="form-control font12 bg-dark"
+                                                                id="walletAddress-sm" disabled>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="discordusername"
+                                                                class="form-label font11">Discord
+                                                                Username</label>
+                                                            <input type="text" class="form-control font12"
+                                                                id="discord-sm">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="wladdress" class="form-label font11">WL
+                                                                Address</label>
+                                                            <input type="text" class="form-control font12"
+                                                                id="wlAddress-sm">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="e-mailaddress"
+                                                                class="form-label font11">E-mail
+                                                                address</label>
+                                                            <input type="email" class="form-control font12"
+                                                                id="email-sm">
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <label for="twitterhandel"
+                                                                class="form-label font11">Twitter
+                                                                Handel</label>
+                                                            <input type="text" class="form-control font12"
+                                                                id="twitter-sm">
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div class="tab-pane fade deta" id="history-sm" role="tabpanel"
+                                                    aria-labelledby="history-sm-tab">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer bbg2">
+                                            <button type="button" class="btn btnn graybtn p-2 mx-2 text-light close"
+                                                data-dismiss="modal" aria-label="Close">CANCEL</button>
+                                            <button type="button" class="btn btnn yellowbtn p-2"
+                                                onclick="updateProfile_sm">CONFIRM</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END OF MODAL -->
+                            <!-- END OF MODAL -->
+
+
+
+
+
+                            <button class="btn btnn graybtn text-light d-none" id="wallet-button-sm"
+                                data-toggle="modal" data-target="#disconnect2"><img src="../images/whiteWallet.svg"
+                                    alt="">
+                                0x000...0000</button>
+
+                            <!-- START OF MODAL -->
+                            <!-- START OF MODAL -->
+                            <div class="modal fade" id="disconnect2" tabindex="-1" role="dialog"
+                                aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content rounded-3 bg1">
+                                        <div class="modal-header py-0 pt-4 m-start text-light border-0 bg1">
+                                            <p></p>
+                                            <button type="button m-start"
+                                                class="btn-close btn-close-white btnn graybtn font1 p-2 mx-2 text-light close border-0"
+                                                data-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body my-0 text-light text-center pt-0">
+                                            <h1 class="navfont2"> DISCONNECT?</h1>
+                                            <p class="mt-4 navfont3">Are you sure to want to disconnect your wallet?
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer justify-content-around row border-0">
+                                            <button type="button" style="font-size: 20px;"
+                                                class="col-5 btn btnn graybtn text-light py-3 close"
+                                                data-dismiss="modal" aria-label="Close">CANCEL</button>
+                                            <button type="button" style="font-size: 20px;"
+                                                class="col-5 btn btnn redbtn py-3">DISCONNECT</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END OF MODAL -->
+                            <!-- END OF MODAL -->
+
+
+                        </div>
+
+
+
+
+
+
+
+                        <ul class="nav flex-column justify-content-center m-auto h-75 text-center navmobile">
+                            <li class="nav-item">
+                                <a class="nav-link font15" href="/">Homepage</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font15act" href="../staking/">STAKING</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font15" href="#">MARKETPLACE</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link font15" href="../partners/">PARTNERS</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
 
 
-        </div>
-    </nav>
+
+    </div>
+</nav>
+
 
     <section class="container-fluid mx-auto text-center justify-content-around d-flex row mb-5 S1">
         <h1 class="font1 text-light mb-3">STAKING // SEASON 1</h1>

@@ -210,7 +210,135 @@ async function onConnect() {
 }
 
 
+async function updateProfile_sm() {
+    toastr.info("Updating");
+    let res = await axios.post("http://localhost:3000/updateProfile/", {
+        token: localStorage.getItem("auth"),
+        newProfile: {
+            discord: document.getElementById("discord-sm").value,
+            twitter: document.getElementById("twitter-sm").value,
+            wlAddress: document.getElementById("wlAddress-sm").value,
+            email: document.getElementById("email-sm").value
+        }
+    })
+    if (res.data.error == undefined) {
+        toastr.success("Updated");
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    } else {
+
+        toastr.error(res.data.desc);
+    }
+}
+
+
+async function updateProfile_lg() {
+    toastr.info("Updating");
+    let res = await axios.post("http://localhost:3000/updateProfile/", {
+        token: localStorage.getItem("auth"),
+        newProfile: {
+            discord: document.getElementById("discord-lg").value,
+            twitter: document.getElementById("twitter-lg").value,
+            wlAddress: document.getElementById("wlAddress-lg").value,
+            email: document.getElementById("email-lg").value
+        }
+    })
+    if (res.data.error == undefined) {
+        toastr.success("Updated");
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    } else {
+
+        toastr.error(res.data.desc);
+    }
+}
+
+
+async function fetchHistory() {
+    let res = await axios.post("http://localhost:3000/getHistory/", {
+        token: localStorage.getItem("auth")
+    })
+    if (res.data.authenticated !== false) {
+        document.getElementById("history-lg").innerHTML = "";
+        document.getElementById("history-sm").innerHTML = "";
+        res.data.history.forEach(item => {
+            let newItem = `<div class="row">
+        <div class="col-3 mb-3">
+            <img class="rounded w-100" src="${item.image}" alt="${item.name}">
+        </div>
+        <div class="col-9 text-start my-auto">
+            <p class="font13">${item.name}</p>
+            <p class="font14">Claim date : ${getDateFromUnix(item.claimTime)}
+            </p>
+        </div>
+        </div>`
+
+            document.getElementById("history-sm").innerHTML += newItem;
+            document.getElementById("history-lg").innerHTML += newItem;
+        })
+    } else {
+        toastr.error(res.data.desc);
+    }
+
+}
+
+
+async function fetchProfile() {
+    let res = await axios.post("http://localhost:3000/getProfile/", {
+        token: localStorage.getItem("auth")
+    })
+    if (res.data.authenticated !== false) {
+        document.getElementById("walletAddress-sm").value = selectedAccount;
+        document.getElementById("walletAddress-lg").value = selectedAccount;
+
+        document.getElementById("discord-sm").value = res.data.profile.discord;
+        document.getElementById("discord-lg").value = res.data.profile.discord;
+
+        document.getElementById("twitter-sm").value = res.data.profile.twitter;
+        document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+
+        document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
+        document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
+
+
+        document.getElementById("email-sm").value = res.data.profile.email;
+        document.getElementById("email-lg").value = res.data.profile.email;
+    } else {
+        toastr.error(res.data.desc);
+    }
+}
+
 async function connect() {
+
     if (window.web3 == undefined && window.ethereum == undefined) {
         window
             .open("https://metamask.app.link/dapp/artificialintelligenceclub.io", "_blank")
@@ -225,10 +353,74 @@ async function connect() {
     if (isConnected) {
         return
     }
+    if (localStorage.getItem("auth") == null) {
+        const web3 = new Web3(provider);
+        let time = Math.floor(new Date().getTime() / 1000)
+        let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
+        let res = await axios.post("http://localhost:3000/auth/", {
+            wallet: selectedAccount.toLowerCase(),
+            signature: signature,
+            time: time
+        })
+        if (res.data.token !== undefined) {
+            localStorage.setItem("auth", res.data.token);
+            localStorage.setItem("address", res.data.address);
+            localStorage.setItem("time", time);
+            fetchProfile();
+            fetchHistory();
+        } else {
+            toastr.error(res.data.desc);
+        }
+    } else {
+        let res = await axios.post("http://localhost:3000/isAuthValid/", {
+            wallet: selectedAccount.toLowerCase(),
+            token: localStorage.getItem("auth")
+        })
+        if (res.data.authenticated == false) {
+            localStorage.clear();
+            const web3 = new Web3(provider);
+            let time = Math.floor(new Date().getTime() / 1000)
+            let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
+            let res = await axios.post("http://localhost:3000/auth/", {
+                wallet: selectedAccount.toLowerCase(),
+                signature: signature,
+                time: time
+            })
+            if (res.data.token !== undefined) {
+                localStorage.setItem("auth", res.data.token);
+                localStorage.setItem("address", res.data.address);
+                localStorage.setItem("time", time);
+                fetchProfile();
+                fetchHistory();
+            } else {
+                toastr.error(res.data.desc);
+            }
+        } else {
+            fetchProfile();
+            fetchHistory();
+        }
+    }
     if (selectedAccount) {
-        document.getElementById("connect-button").classList.add("d-none");
-        document.getElementById("wallet-button").classList.remove("d-none");
-        document.getElementById("wallet-button").innerHTML = `<img src="../images/whiteWallet.svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
+
+        document.getElementById("connect-button-sm").classList.add("d-none");
+        document.getElementById("connect-button-sm").classList.remove("d-flex");
+
+        document.getElementById("connect-button-lg").classList.add("d-none");
+        document.getElementById("connect-button-lg").classList.remove("d-lg-flex");
+
+
+        document.getElementById("wallet-button-sm").classList.add("d-flex");
+        document.getElementById("wallet-button-sm").classList.remove("d-none");
+        document.getElementById("wallet-button-lg").classList.add("d-lg-flex");
+
+        document.getElementById("profile-button-sm").classList.add("d-flex");
+        document.getElementById("profile-button-sm").classList.remove("d-none");
+        document.getElementById("profile-button-lg").classList.add("d-lg-flex");
+
+
+        document.getElementById("wallet-button-sm").innerHTML = `<img src="../images/whiteWallet.svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
+        document.getElementById("wallet-button-lg").innerHTML = `<img src="../images/whiteWallet.svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
+        toastr.success('Connected')
         isConnected = true;
     }
 }
@@ -482,7 +674,7 @@ async function loadTokens() {
             </div>`
             }
 
-            if(tokenId == 314){
+            if (tokenId == 314) {
                 if (isTokensStaked == false) {
                     document.getElementById("stakedTokens").innerHTML = `<h6 class="font3 my-5">No agents staked</h6>`
                 }
@@ -613,10 +805,28 @@ async function loadSeasonEnds() {
 async function disconnect() {
     selectedAccount = undefined;
     isConnected = false;
-    document.getElementById("connect-button").classList.remove("d-none");
-    document.getElementById("wallet-button").classList.add("d-none");
+
+    document.getElementById("connect-button-sm").classList.remove("d-none");
+    document.getElementById("connect-button-sm").classList.add("d-flex");
+
+    document.getElementById("connect-button-lg").classList.remove("d-none");
+    document.getElementById("connect-button-lg").classList.add("d-lg-flex");
+
+
+    document.getElementById("wallet-button-sm").classList.remove("d-flex");
+    document.getElementById("wallet-button-sm").classList.add("d-none");
+    document.getElementById("wallet-button-lg").classList.remove("d-lg-flex");
+
+
+    document.getElementById("profile-button-sm").classList.remove("d-flex");
+    document.getElementById("profile-button-sm").classList.add("d-none");
+    document.getElementById("profile-button-lg").classList.remove("d-lg-flex");
+
     document.getElementById("stakedTokens").innerHTML = '<h3 class="font3 my-5">Must connect first</h3>';
     document.getElementById("ownedTokens").innerHTML = '<h3 class="font3 my-5">Must connect first</h3>';
+    localStorage.clear();
+    toastr.error('Disconnected')
+
 }
 
 window.addEventListener("load", async () => {
