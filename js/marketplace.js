@@ -213,7 +213,6 @@ async function toggleBorder(id) {
     document.getElementById(`claim-${id}`).disabled = false;
     radios.forEach(radio => {
         if (radio.checked == true) {
-            console.log(radio.value)
             document.getElementById(radio.id.substring(1, radio.id.length)).style.border = "2px solid #ff0";
             document.getElementById(radio.id.substring(1, radio.id.length)).style.boxShadow = "0px 0px 5px #ff0";
         } else {
@@ -229,7 +228,6 @@ async function toggleCheckbox(id, itemId) {
     let radios = document.getElementsByName("checkbox-i" + itemId)
     radios.forEach(radio => {
         if (radio.checked == true) {
-            console.log(radio.value)
             document.getElementById(radio.id.substring(1, radio.id.length)).style.border = "2px solid #ff0";
             document.getElementById(radio.id.substring(1, radio.id.length)).style.boxShadow = "0px 0px 5px #ff0";
         } else {
@@ -272,6 +270,7 @@ async function fetchHistory() {
 }
 
 async function claimItem(itemId) {
+    toastr.info("Claiming item");
     let tokenId;
 
     let radios = document.getElementsByName("checkbox-i" + itemId)
@@ -326,6 +325,7 @@ async function fetchProfile() {
 }
 
 async function fetchItems() {
+    toastr.info("Fetching items");
     const web3 = new Web3(provider);
     const stakingContract = new web3.eth.Contract(abi, contractAddress);
     let tokensStaked = await stakingContract.methods.tokensStakedBy(selectedAccount).call();
@@ -341,7 +341,7 @@ async function fetchItems() {
         agents: tokensStakedIds
     }).then(async res => {
 
-        if (res.data.authenticated !== undefined) {
+        if (res.data.desc == undefined) {
             for (let index = 0; index < tokensStakedIds.length; index++) {
                 let tokenData = await stakingContract.methods.checkStakeTierOfToken(tokensStakedIds[index]).call();
 
@@ -450,7 +450,7 @@ async function fetchItems() {
                                                         <button type="button"
                                                             class="btn btnn yellowbtn2 font31 p-2 mx-2 text-light close"
                                                             data-dismiss="modal" aria-label="Close">CANCEL</button>
-                                                        <button type="button" class="btn btnn yellowbtn font31 p-2" onclick="claimItem('${item.id}');" id="claim-${item.id}" disabled>CLAIM
+                                                        <button type="button" class="btn btnn yellowbtn font31 p-2" onclick="claimItem('${item.id}');" id="claim-${item.id}" data-dismiss="modal" disabled>CLAIM
                                                             ITEM</button>
                                                     </div>
                                                 </div>
@@ -463,6 +463,7 @@ async function fetchItems() {
             });
 
         } else {
+            
             toastr.error(res.data.desc);
         }
 
@@ -472,6 +473,7 @@ async function fetchItems() {
 }
 
 async function updateProfile_sm() {
+    toastr.info("Updating");
     let res = await axios.post("http://localhost:3000/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
@@ -482,7 +484,7 @@ async function updateProfile_sm() {
         }
     })
     if (res.data.error == undefined) {
-        alert("updated")
+        toastr.success("Updated");
         document.getElementById("walletAddress-sm").value = selectedAccount;
         document.getElementById("walletAddress-lg").value = selectedAccount;
 
@@ -500,12 +502,14 @@ async function updateProfile_sm() {
         document.getElementById("email-sm").value = res.data.profile.email;
         document.getElementById("email-lg").value = res.data.profile.email;
     }else {
+       
         toastr.error(res.data.desc);
     }
 }
 
 
 async function updateProfile_lg() {
+    toastr.info("Updating");
     let res = await axios.post("http://localhost:3000/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
@@ -516,7 +520,7 @@ async function updateProfile_lg() {
         }
     })
     if (res.data.error == undefined) {
-        alert("updated")
+        toastr.success("Updated");
         document.getElementById("walletAddress-sm").value = selectedAccount;
         document.getElementById("walletAddress-lg").value = selectedAccount;
 
@@ -534,12 +538,14 @@ async function updateProfile_lg() {
         document.getElementById("email-sm").value = res.data.profile.email;
         document.getElementById("email-lg").value = res.data.profile.email;
     }else {
+        
         toastr.error(res.data.desc);
     }
 }
 
 
 async function connect() {
+
     if (window.web3 == undefined && window.ethereum == undefined) {
         window
             .open("https://metamask.app.link/dapp/artificialintelligenceclub.io", "_blank")
@@ -652,7 +658,7 @@ async function disconnect() {
     document.getElementById("profile-button-lg").classList.remove("d-lg-flex");
 
     localStorage.clear();
-    toastr.danger('Disconnected')
+    toastr.error('Disconnected')
 
 }
 
