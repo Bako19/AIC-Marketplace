@@ -271,15 +271,13 @@ async function fetchHistory() {
 
 async function claimItem(itemId) {
     let tokenId;
-    console.log(itemId)
+    
     let radios = document.getElementsByName("checkbox-i" + itemId)
-    console.log(radios)
+
     radios.forEach(radio => {
         if (radio.checked == true) {
-            console.log(radio.value)
+ 
             tokenId = radio.value
-        }else{
-            console.log(radio.value)
         }
     })
 
@@ -294,8 +292,8 @@ async function claimItem(itemId) {
         tokenId: tokenId
     })
     if (res.data.error == false) {
-        console.log("claimed");
-        alert("claimed")
+        toastr.success("Item claimed");
+        
     }
 }
 async function fetchProfile() {
@@ -593,6 +591,7 @@ async function connect() {
     }
 
     if (selectedAccount) {
+        
         document.getElementById("connect-button-sm").classList.add("d-none");
         document.getElementById("connect-button-sm").classList.remove("d-flex");
 
@@ -602,12 +601,16 @@ async function connect() {
 
         document.getElementById("wallet-button-sm").classList.add("d-flex");
         document.getElementById("wallet-button-sm").classList.remove("d-none");
-
         document.getElementById("wallet-button-lg").classList.add("d-lg-flex");
+
+        document.getElementById("profile-button-sm").classList.add("d-flex");
+        document.getElementById("profile-button-sm").classList.remove("d-none");
+        document.getElementById("profile-button-lg").classList.add("d-lg-flex");
 
 
         document.getElementById("wallet-button-sm").innerHTML = `<img src="../images/whiteWallet.svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
         document.getElementById("wallet-button-lg").innerHTML = `<img src="../images/whiteWallet.svg" alt="">  ${selectedAccount.substr(0,5)}...${selectedAccount.substr(selectedAccount.length - 4,selectedAccount.length)}`
+        toastr.success('Connected')
         isConnected = true;
     }
 }
@@ -624,11 +627,15 @@ async function disconnect() {
 
     document.getElementById("wallet-button-sm").classList.remove("d-flex");
     document.getElementById("wallet-button-sm").classList.add("d-none");
-
     document.getElementById("wallet-button-lg").classList.remove("d-lg-flex");
 
 
+    document.getElementById("profile-button-sm").classList.remove("d-flex");
+    document.getElementById("profile-button-sm").classList.add("d-none");
+    document.getElementById("profile-button-lg").classList.remove("d-lg-flex");
+
     localStorage.clear();
+    toastr.danger('Disconnected')
 
 }
 
