@@ -75,7 +75,7 @@ function getDateFromUnix(unixTime) {
 
 async function updateProfile_sm() {
     toastr.info("Updating");
-    let res = await axios.post("http://localhost:3000/updateProfile/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-sm").value,
@@ -111,7 +111,7 @@ async function updateProfile_sm() {
 
 async function updateProfile_lg() {
     toastr.info("Updating");
-    let res = await axios.post("http://localhost:3000/updateProfile/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-lg").value,
@@ -146,7 +146,7 @@ async function updateProfile_lg() {
 
 
 async function fetchHistory() {
-    let res = await axios.post("http://localhost:3000/getHistory/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/getHistory/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -175,7 +175,7 @@ async function fetchHistory() {
 
 
 async function fetchProfile() {
-    let res = await axios.post("http://localhost:3000/getProfile/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/getProfile/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -219,7 +219,7 @@ async function claimItem(itemId) {
         return
     }
 
-    let res = await axios.post("http://localhost:3000/claimItem/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/claimItem/", {
         token: localStorage.getItem("auth"),
         itemId: itemId,
         tokenId: tokenId
@@ -234,7 +234,7 @@ async function claimItem(itemId) {
 async function fetchItem() {
 
     if (document.getElementById("e-itemId").value) {
-        let res = await axios.post("http://localhost:3000/fetchItem/", {
+        let res = await axios.post("https://artificialintelligenceclub.io/fetchItem/", {
             token: localStorage.getItem("auth"),
             itemId: document.getElementById("e-itemId").value
         })
@@ -280,7 +280,7 @@ async function fetchItem() {
 async function editItem() {
 
     if (document.getElementById("e-itemId").value) {
-        let res = await axios.post("http://localhost:3000/updateItem/", {
+        let res = await axios.post("https://artificialintelligenceclub.io/updateItem/", {
             token: localStorage.getItem("auth"),
             itemId: document.getElementById("e-itemId").value,
             updatedItem: {
@@ -305,7 +305,7 @@ async function editItem() {
 
 async function downloadWlAddresses() {
 
-    let res = await axios.post("http://localhost:3000/fetchWlAddresses/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/fetchWlAddresses/", {
         token: localStorage.getItem("auth"),
         itemId: document.getElementById("d-itemId").value
     })
@@ -331,7 +331,7 @@ function downloadObjectAsJson(exportObj, exportName){
 async function createItem() {
 
 
-    let res = await axios.post("http://localhost:3000/createItem/", {
+    let res = await axios.post("https://artificialintelligenceclub.io/createItem/", {
         token: localStorage.getItem("auth"),
         newItem: {
             name: document.getElementById("c-itemName").value,
@@ -372,7 +372,7 @@ async function connect() {
         const web3 = new Web3(provider);
         let time = Math.floor(new Date().getTime() / 1000)
         let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-        let res = await axios.post("http://localhost:3000/auth/", {
+        let res = await axios.post("https://artificialintelligenceclub.io/auth/", {
             wallet: selectedAccount.toLowerCase(),
             signature: signature,
             time: time
@@ -388,7 +388,7 @@ async function connect() {
         }
 
     } else {
-        let res = await axios.post("http://localhost:3000/isAuthValid/", {
+        let res = await axios.post("https://artificialintelligenceclub.io/isAuthValid/", {
             wallet: selectedAccount.toLowerCase(),
             token: localStorage.getItem("auth")
         })
@@ -397,7 +397,7 @@ async function connect() {
             const web3 = new Web3(provider);
             let time = Math.floor(new Date().getTime() / 1000)
             let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-            let res = await axios.post("http://localhost:3000/auth/", {
+            let res = await axios.post("https://artificialintelligenceclub.io/auth/", {
                 wallet: selectedAccount.toLowerCase(),
                 signature: signature,
                 time: time
