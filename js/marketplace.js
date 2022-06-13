@@ -448,15 +448,7 @@ async function fetchItems() {
             let tier2TotalTokens = 0;
             let tier3TotalTokens = 0;
             itemsFetched.data.items.forEach(item => {
-                if (item.tierId == 1) {
-                    tier1TotalTokens++;
-                }
-                if (item.tierId == 2) {
-                    tier2TotalTokens++;
-                }
-                if (item.tierId == 3) {
-                    tier3TotalTokens++;
-                }
+
                 let isClaimable = true;
                 if (item.quantityLeft <= 0) {
                     isClaimable = false;
@@ -495,6 +487,15 @@ async function fetchItems() {
                 })
 
                 if (agentsAvailableCount > 0) {
+                    if (item.tierId == 1) {
+                        tier1TotalTokens++;
+                    }
+                    if (item.tierId == 2) {
+                        tier2TotalTokens++;
+                    }
+                    if (item.tierId == 3) {
+                        tier3TotalTokens++;
+                    }
                     document.getElementById("marketplace-items").innerHTML += `
     <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
                 <div class="rounded cardbg ">
@@ -549,7 +550,6 @@ async function fetchItems() {
                 </div>
             </div>`
                 }
-
             })
             if (tier1TotalTokens == 0) {
                 document.getElementById("filter-sm-1").disabled = true
