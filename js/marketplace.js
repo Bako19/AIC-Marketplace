@@ -241,7 +241,7 @@ async function toggleCheckbox(id, itemId) {
 
 async function updateProfile_sm() {
     toastr.info("Updating");
-    let res = await axios.post("https://artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-sm").value,
@@ -277,7 +277,7 @@ async function updateProfile_sm() {
 
 async function updateProfile_lg() {
     toastr.info("Updating");
-    let res = await axios.post("https://artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-lg").value,
@@ -312,7 +312,7 @@ async function updateProfile_lg() {
 
 
 async function fetchHistory() {
-    let res = await axios.post("https://artificialintelligenceclub.io/getHistory/", {
+    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getHistory/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -341,7 +341,7 @@ async function fetchHistory() {
 
 
 async function fetchProfile() {
-    let res = await axios.post("https://artificialintelligenceclub.io/getProfile/", {
+    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getProfile/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -385,7 +385,7 @@ async function claimItem(itemId) {
         return
     }
 
-    let res = await axios.post("https://artificialintelligenceclub.io/claimItem/", {
+    let res = await axios.post("https://mapi.artificialintelligenceclub.io/claimItem/", {
         token: localStorage.getItem("auth"),
         itemId: itemId,
         tokenId: tokenId
@@ -409,10 +409,10 @@ async function fetchItems() {
         }
     })
 
-    itemsFetched = await axios.post("https://artificialintelligenceclub.io/getItems/", {
+    itemsFetched = await axios.post("https://mapi.artificialintelligenceclub.io/getItems/", {
         token: localStorage.getItem("auth")
     })
-    axios.post("https://artificialintelligenceclub.io/checkAgentsClaimDate/", {
+    axios.post("https://mapi.artificialintelligenceclub.io/checkAgentsClaimDate/", {
         token: localStorage.getItem("auth"),
         agents: tokensStakedIds
     }).then(async res => {
@@ -740,7 +740,7 @@ async function connect() {
 
     if (window.web3 == undefined && window.ethereum == undefined) {
         window
-            .open("https://metamask.app.link/dapp/artificialintelligenceclub.io", "_blank")
+            .open("https://metamask.app.link/dapp/mapi.artificialintelligenceclub.io", "_blank")
             .focus();
     }
     provider = await web3Modal.connect();
@@ -757,7 +757,7 @@ async function connect() {
         const web3 = new Web3(provider);
         let time = Math.floor(new Date().getTime() / 1000)
         let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-        let res = await axios.post("https://artificialintelligenceclub.io/auth/", {
+        let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
             wallet: selectedAccount.toLowerCase(),
             signature: signature,
             time: time
@@ -774,7 +774,7 @@ async function connect() {
         }
 
     } else {
-        let res = await axios.post("https://artificialintelligenceclub.io/isAuthValid/", {
+        let res = await axios.post("https://mapi.artificialintelligenceclub.io/isAuthValid/", {
             wallet: selectedAccount.toLowerCase(),
             token: localStorage.getItem("auth")
         })
@@ -783,7 +783,7 @@ async function connect() {
             const web3 = new Web3(provider);
             let time = Math.floor(new Date().getTime() / 1000)
             let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-            let res = await axios.post("https://artificialintelligenceclub.io/auth/", {
+            let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
                 wallet: selectedAccount.toLowerCase(),
                 signature: signature,
                 time: time
