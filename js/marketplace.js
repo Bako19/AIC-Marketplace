@@ -470,8 +470,11 @@ async function fetchItems() {
 
 
                 let agentsAvailable = "";
+                let agentsAvailableCount = 0;
                 Object.keys(agentsStaked).forEach((agentId, index) => {
-                    if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60)) {
+
+                    if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) - 24 * 60 * 60)) {
+                        agentsAvailableCount++;
                         agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
 <div id="${index}-${item.id}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
     <div class="form-check position-absolute checkpos p-0">
@@ -491,60 +494,62 @@ async function fetchItems() {
                     }
                 })
 
-
-                document.getElementById("marketplace-items").innerHTML += `
-                <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
-                            <div class="rounded cardbg ">
-                                <img class="col-11 rounded mt-2 mt-md-3" src="${item.image}" alt="">
-                                <p class="font8 mt-1 mb-0">${item.name}</p>
-                                <p class="font9 mt-2">${item.quantityLeft} Available</p>
-                                <div class="d-flex justify-content-between pb-2 mx-2">
-                                    <p class="my-auto tier px-2 pb-1 rounded-pill">Tier ${item.tierId}</p>
-                                    ${(isClaimable)?`<button class="btn btnn yellowbtn p-1 pb-sm-2" class="btn btn-primary" data-toggle="modal"data-target="#modal1"><p class="font31 m-0">Claim</p>
-                                </button>`:`    <button class="btn btnn yellowbtn p-1 pb-sm-2" class="btn btn-primary"disabled>
-                                <p class="font31 m-0">Claim</p>
-                            </button>`}
-                                    <div class="modal fade" id="modal1" tabindex="-1" role="dialog"
-                                        aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                            <div class="modal-content rounded-3 bg1">
-                                                <div class="modal-header text-light bbg2">
-                                                    <h5 class="modal-title font5" id="exampleModalLongTitle">CLAIM ITEM</h5>
-                                                    <button type="button"
-                                                        class="btn-close btn-close-white btnn yellowbtn2 p-2 mx-2 text-light close border-0"
-                                                        data-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div class="border-bottom d-flex pb-5">
-                                                        <img class="col-5 rounded mt-4" src="${item.image}" alt="">
-                                                        <div class="my-auto px-3 text-start">
-                                                            <p class="font8 mt-3 mb-0">${item.name}
-                                                            </p>
-                                                            <p class="font9 mb-0">${item.quantityLeft} Available</p><br>
-                                                            <p class="my-auto tier px-2 rounded-pill widthfit">Tier ${item.tierId}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-4 text-start">
-                                                        <p class="font2">Please select the agent you would like to use to claim
-                                                            this item:</p>
-                                                        <div class="row">
-                                                           ${agentsAvailable}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer bbg2">
-                                                    <button type="button"
-                                                        class="btn btnn yellowbtn2 font31 p-2 mx-2 text-light close"
-                                                        data-dismiss="modal" aria-label="Close">CANCEL</button>
-                                                    <button type="button" class="btn btnn yellowbtn font31 p-2" onclick="claimItem('${item.id}');" id="claim-${item.id}" data-dismiss="modal" disabled>CLAIM
-                                                        ITEM</button>
-                                                </div>
+                if (agentsAvailableCount > 0) {
+                    document.getElementById("marketplace-items").innerHTML += `
+    <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
+                <div class="rounded cardbg ">
+                    <img class="col-11 rounded mt-2 mt-md-3" src="${item.image}" alt="">
+                    <p class="font8 mt-1 mb-0">${item.name}</p>
+                    <p class="font9 mt-2">${item.quantityLeft} Available</p>
+                    <div class="d-flex justify-content-between pb-2 mx-2">
+                        <p class="my-auto tier px-2 pb-1 rounded-pill">Tier ${item.tierId}</p>
+                        ${(isClaimable)?`<button class="btn btnn yellowbtn p-1 pb-sm-2" class="btn btn-primary" data-toggle="modal"data-target="#modal-${item.id}"><p class="font31 m-0">Claim</p>
+                    </button>`:`    <button class="btn btnn yellowbtn p-1 pb-sm-2" class="btn btn-primary"disabled>
+                    <p class="font31 m-0">Claim</p>
+                </button>`}
+                        <div class="modal fade" id="modal-${item.id}" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content rounded-3 bg1">
+                                    <div class="modal-header text-light bbg2">
+                                        <h5 class="modal-title font5" id="exampleModalLongTitle">CLAIM ITEM</h5>
+                                        <button type="button"
+                                            class="btn-close btn-close-white btnn yellowbtn2 p-2 mx-2 text-light close border-0"
+                                            data-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="border-bottom d-flex pb-5">
+                                            <img class="col-5 rounded mt-4" src="${item.image}" alt="">
+                                            <div class="my-auto px-3 text-start">
+                                                <p class="font8 mt-3 mb-0">${item.name}
+                                                </p>
+                                                <p class="font9 mb-0">${item.quantityLeft} Available</p><br>
+                                                <p class="my-auto tier px-2 rounded-pill widthfit">Tier ${item.tierId}</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 text-start">
+                                            <p class="font2">Please select the agent you would like to use to claim
+                                                this item:</p>
+                                            <div class="row">
+                                               ${agentsAvailable}
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="modal-footer bbg2">
+                                        <button type="button"
+                                            class="btn btnn yellowbtn2 font31 p-2 mx-2 text-light close"
+                                            data-dismiss="modal" aria-label="Close">CANCEL</button>
+                                        <button type="button" class="btn btnn yellowbtn font31 p-2" onclick="claimItem('${item.id}');" id="claim-${item.id}" data-dismiss="modal" disabled>CLAIM
+                                            ITEM</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>`
+                        </div>
+                    </div>
+                </div>
+            </div>`
+                }
+
             })
             if (tier1TotalTokens == 0) {
                 document.getElementById("filter-sm-1").disabled = true
