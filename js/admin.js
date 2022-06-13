@@ -76,9 +76,6 @@ function getDateFromUnix(unixTime) {
     }
 }
 
-
-
-
 async function updateProfile_sm() {
     toastr.info("Updating");
     let res = await axios.post("http://localhost:3000/updateProfile/", {
@@ -309,6 +306,31 @@ async function editItem() {
 
 }
 
+async function downloadWlAddresses() {
+
+    let res = await axios.post("http://localhost:3000/fetchWlAddresses/", {
+        token: localStorage.getItem("auth"),
+        itemId: document.getElementById("d-itemId").value
+    })
+    if (res.data.error == undefined) {
+        downloadObjectAsJson(res.data.item.wlAddresses,"list");
+        toastr.success("");
+    } else {
+        toastr.error(res.data.desc);
+    }
+
+
+}
+
+function downloadObjectAsJson(exportObj, exportName){
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("download", exportName + ".json");
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+  }
 async function createItem() {
 
 

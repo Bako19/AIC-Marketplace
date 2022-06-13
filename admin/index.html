@@ -371,7 +371,7 @@
         <h1 class="font1 text-light mb-5">Admin dashboard</h1>
 
         <div class="row justify-content-around text-light mb-5">
-            <div class="col-11 col-xl-4 mb-5 bg1 rounded heightfit">
+            <div class="col-11 col-xl-5 mb-5 bg1 rounded heightfit">
                 <div class="row">
                     <div class="col-12">
                         <div class="row justify-content-around py-3">
@@ -387,45 +387,46 @@
                 <div class="row justify-content-center justify-content-xl-start">
                     <form class="text-start">
                         <div class="mb-3">
-                            <label for="walletaddress" class="form-label font11">Item id</label>
+                            <label for="e-itemId" class="form-label font11">Item id</label>
                             <input type="number" class="form-control font12" id="e-itemId">
                         </div>
                         <div class="mb-3">
-                            <label for="discordusername" class="form-label font11">Item name</label>
+                            <label for="e-itemName" class="form-label font11">Item name</label>
                             <input type="text" class="form-control font12 bg-dark" id="e-itemName" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="wladdress" class="form-label font11">Item image url</label>
+                            <label for="e-itemImage" class="form-label font11">Item image url</label>
                             <input type="text" class="form-control font12 bg-dark" id="e-itemImage" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="e-mailaddress" class="form-label font11">Total quantity</label>
+                            <label for="e-itemQuantity" class="form-label font11">Total quantity</label>
                             <input type="email" class="form-control font12 bg-dark" id="e-itemQuantity" disabled>
                         </div>
                         <div class="mb-3">
-                            <label for="twitterhandel" class="form-label font11">Minimum Tier</label>
+                            <label for="e-itemTierId" class="form-label font11">Minimum Tier</label>
                             <input type="text" class="form-control font12 bg-dark" id="e-itemTierId" disabled>
                         </div>
                         <div class="mb-3">
 
-                            <label for="twitterhandel" class="form-label font11">Enabled :</label>
+                            <label for="e-itemEnabled" class="form-label font11">Enabled :</label>
                             <input type="checkbox" class="form-check-input" id="e-itemEnabled" checked disabled>
 
                         </div>
                         <div class="mb-3">
-                            <label for="twitterhandel" class="form-label font11">Last submit time (Unix)</label>
+                            <label for="e-itemLastSubmitTime" class="form-label font11">Last submit time (Unix)</label>
                             <input type="text" class="form-control font12 bg-dark" id="e-itemLastSubmitTime" disabled>
                         </div>
                     </form>
                     <div style="display: flex;flex-wrap: wrap;flex-shrink: 0;align-items: center;justify-content: flex-end;padding: 0.6rem;"">
-                        <button type=" button" class="btn btnn yellowbtn p-2" id="e-confirm"onclick="editItem();" disabled>UPDATE</button>
+                        <button type=" button" class="btn btnn yellowbtn p-2" id="e-confirm" onclick="editItem();"
+                        disabled>UPDATE</button>
                     </div>
                 </div>
             </div>
 
 
 
-            <div class="col-11 col-xl-4 mb-5 bg1 rounded heightfit">
+            <div class="col-11 col-xl-5 mb-5 bg1 rounded heightfit">
                 <div class="row ">
                     <div class="col-12">
                         <div class="row justify-content-around  py-3">
@@ -434,37 +435,60 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center justify-content-xl-start" id="stakedTokens">
+                <div class="row justify-content-center justify-content-xl-start">
                     <form class="text-start">
                         <div class="mb-3">
-                            <label for="discordusername" class="form-label font11">Item name</label>
+                            <label for="c-itemName" class="form-label font11">Item name</label>
                             <input type="text" class="form-control font12" id="c-itemName">
                         </div>
                         <div class="mb-3">
-                            <label for="wladdress" class="form-label font11">Item image url</label>
+                            <label for="c-itemImage" class="form-label font11">Item image url</label>
                             <input type="text" class="form-control font12" id="c-itemImage">
                         </div>
                         <div class="mb-3">
-                            <label for="e-mailaddress" class="form-label font11">Total quantity</label>
+                            <label for="e-itemQuantity" class="form-label font11">Total quantity</label>
                             <input type="email" class="form-control font12" id="c-itemQuantity">
                         </div>
                         <div class="mb-3">
-                            <label for="twitterhandel" class="form-label font11">Minimum Tier</label>
+                            <label for="c-itemTierId" class="form-label font11">Minimum Tier</label>
                             <input type="text" class="form-control font12" id="c-itemTierId">
                         </div>
                         <div class="mb-3">
 
-                            <label for="twitterhandel" class="form-label font11">Enabled :</label>
+                            <label for="c-itemEnabled" class="form-label font11">Enabled :</label>
                             <input type="checkbox" class="form-check-input" id="c-itemEnabled" checked>
 
                         </div>
                         <div class="mb-3">
-                            <label for="twitterhandel" class="form-label font11">Last submit time (Unix)</label>
+                            <label for="c-itemLastSubmitTime" class="form-label font11">Last submit time (Unix)</label>
                             <input type="text" class="form-control font12" id="c-itemLastSubmitTime">
                         </div>
                     </form>
                     <div style="display: flex;flex-wrap: wrap;flex-shrink: 0;align-items: center;justify-content: flex-end;padding: 0.6rem;"">
                         <button type=" button" class="btn btnn yellowbtn p-2" onclick="createItem();">CONFIRM</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-11 col-xl-5 mb-5 bg1 rounded heightfit">
+                <div class="row ">
+                    <div class="col-12">
+                        <div class="row justify-content-around  py-3">
+                            <h5 class="col-12 py-2 my-lg-auto text-center font5">Download the whitelisted addresses list</h5>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center justify-content-xl-start">
+                    <form class="text-start">
+                        <div class="mb-3">
+                            <label for="d-itemId" class="form-label font11">Item id</label>
+                            <input type="number" class="form-control font12" id="d-itemId">
+                        </div>
+
+                    </form>
+                    <div style="display: flex;flex-wrap: wrap;flex-shrink: 0;align-items: center;justify-content: flex-end;padding: 0.6rem;"">
+                        <button type=" button" class="btn btnn yellowbtn p-2" onclick="downloadWlAddresses();">DOWNLOAD</button>
                     </div>
                 </div>
             </div>
