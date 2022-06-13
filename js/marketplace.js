@@ -440,11 +440,23 @@ async function fetchItems() {
             // items making 
 
 
-
+            // must be done in the filter if there are more filters!
 
 
             document.getElementById("marketplace-items").innerHTML = ""
+            let tier1TotalTokens = 0;
+            let tier2TotalTokens = 0;
+            let tier3TotalTokens = 0;
             itemsFetched.data.items.forEach(item => {
+                if (item.tierId == 1) {
+                    tier1TotalTokens++;
+                }
+                if (item.tierId == 2) {
+                    tier2TotalTokens++;
+                }
+                if (item.tierId == 3) {
+                    tier3TotalTokens++;
+                }
                 let isClaimable = true;
                 if (item.quantityLeft <= 0) {
                     isClaimable = false;
@@ -459,7 +471,6 @@ async function fetchItems() {
 
                 let agentsAvailable = "";
                 Object.keys(agentsStaked).forEach((agentId, index) => {
-
                     if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) + 24 * 60 * 60)) {
                         agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
 <div id="${index}-${item.id}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
@@ -535,14 +546,51 @@ async function fetchItems() {
                             </div>
                         </div>`
             })
+            if (tier1TotalTokens == 0) {
+                document.getElementById("filter-sm-1").disabled = true
+                document.getElementById("filter-lg-1").disabled = true
+                document.getElementById("filter-sm-1").classList.add("dis");
+                document.getElementById("filter-lg-1").classList.add("dis");
+            } else {
+                document.getElementById("filter-sm-1").disabled = false
+                document.getElementById("filter-lg-1").disabled = false
+                document.getElementById("filter-sm-1").classList.remove("dis");
+                document.getElementById("filter-lg-1").classList.remove("dis");
+            }
+            if (tier2TotalTokens == 0) {
+                document.getElementById("filter-sm-2").disabled = true
+                document.getElementById("filter-lg-2").disabled = true
+                document.getElementById("filter-sm-2").classList.add("dis");
+                document.getElementById("filter-lg-2").classList.add("dis");
+            } else {
+                document.getElementById("filter-sm-2").disabled = false
+                document.getElementById("filter-lg-2").disabled = false
+                document.getElementById("filter-sm-2").classList.remove("dis");
+                document.getElementById("filter-lg-2").classList.remove("dis");
+            }
+            if (tier3TotalTokens == 0) {
+                document.getElementById("filter-sm-3").disabled = true
+                document.getElementById("filter-lg-3").disabled = true
+                document.getElementById("filter-sm-3").classList.add("dis");
+                document.getElementById("filter-lg-3").classList.add("dis");
+            } else {
+                document.getElementById("filter-sm-3").disabled = false
+                document.getElementById("filter-lg-3").disabled = false
+                document.getElementById("filter-sm-3").classList.remove("dis");
+                document.getElementById("filter-lg-3").classList.remove("dis");
+            }
+            document.getElementById("filter-sm-1-label").innerHTML = `Tier 1 (${tier1TotalTokens})`
+            document.getElementById("filter-sm-2-label").innerHTML = `Tier 2 (${tier2TotalTokens})`
+            document.getElementById("filter-sm-3-label").innerHTML = `Tier 3 (${tier3TotalTokens})`
 
+
+            document.getElementById("filter-lg-1-label").innerHTML = `Tier 1 (${tier1TotalTokens})`
+            document.getElementById("filter-lg-2-label").innerHTML = `Tier 2 (${tier2TotalTokens})`
+            document.getElementById("filter-lg-3-label").innerHTML = `Tier 3 (${tier3TotalTokens})`
         } else {
 
             toastr.error(res.data.desc);
         }
-
-
-
     })
 }
 
@@ -574,12 +622,12 @@ function toggleFilter(tierId) {
         default:
             break;
     }
-    if(filterArray.length == 0){
-        filterByTier([0,1,2,3]);
-    }else{
+    if (filterArray.length == 0) {
+        filterByTier([0, 1, 2, 3]);
+    } else {
         filterByTier(filterArray);
     }
-  
+
 }
 
 async function filterByTier(tierArray) {
@@ -622,7 +670,7 @@ async function filterByTier(tierArray) {
             }
         })
 
-        if (tierArray.includes(item.tierId)){
+        if (tierArray.includes(item.tierId)) {
             document.getElementById("marketplace-items").innerHTML += `
             <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
                         <div class="rounded cardbg ">
@@ -677,7 +725,7 @@ async function filterByTier(tierArray) {
                         </div>
                     </div>`
         }
-            
+
     })
 
 

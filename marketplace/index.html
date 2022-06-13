@@ -179,7 +179,7 @@
                                     <img class="w-100 mx-2 mobilenavbrandimg" src="../images/mainLogo.svg" alt=""> AIC
                                 </a>
                             </div>
-                            <button type="button" class="btn-close btn-close-white my-auto mx-3" data-dismiss="modal"
+                            <button type="button" class="btn-close btn-close-white my-auto mx-3" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body bg1">
@@ -384,23 +384,23 @@
                 </div>
                 <div class="form-check mx-4">
                     <input class="form-check-input selectable2" type="checkbox" id="filter-lg-1"
-                        onclick="toggleFilter(1);">
-                    <label class="form-check-label filterfont" for="filter-lg-1">
-                        Tier 1 (10)
+                        onclick="toggleFilter(1);" disabled>
+                    <label class="form-check-label filterfont" for="filter-lg-1" id="filter-lg-1-label">
+                        Tier 1 (0)
                     </label>
                 </div>
                 <div class="form-check mx-4">
                     <input class="form-check-input selectable2" type="checkbox" id="filter-lg-2"
-                        onclick="toggleFilter(2);">
-                    <label class="form-check-label filterfont" for="filter-lg-2">
-                        Tier 2 (7)
+                        onclick="toggleFilter(2);" disabled>
+                    <label class="form-check-label filterfont" for="filter-lg-2" id="filter-lg-2-label">
+                        Tier 2 (0)
                     </label>
                 </div>
                 <div class="form-check mx-4">
                     <input class="form-check-input selectable2" type="checkbox" id="filter-lg-3"
-                        onclick="toggleFilter(3);">
-                    <label class="form-check-label filterfont" for="filter-lg-3">
-                        Tier 3 (4)
+                        onclick="toggleFilter(3);" disabled>
+                    <label class="form-check-label filterfont" for="filter-lg-3" id="filter-lg-3-label">
+                        Tier 3 (0)
                     </label>
                 </div>
 
@@ -441,41 +441,27 @@
                     <div class="modal-body text-light text-start">
 
                         <div class="form-check mx-4">
-                            <input class="form-check-input dis selectable2" disabled type="checkbox" value=""
-                                id="check1">
-                            <label class="form-check-label filterfont" for="check1">
-                                Tier 1 (10)
+                            <input class="form-check-input dis selectable2" disabled type="checkbox" id="filter-sm-1"
+                                onclick="toggleFilter(1);" disabled>
+                            <label class="form-check-label filterfont" for="filter-sm-1" id="filter-sm-1-label">
+                                Tier 1 (0)
                             </label>
                         </div>
                         <div class="form-check mx-4">
-                            <input class="form-check-input selectable2" type="checkbox" value="" id="check2">
-                            <label class="form-check-label filterfont" for="check2">
-                                Tier 2 (7)
+                            <input class="form-check-input selectable2" type="checkbox" value="" id="filter-sm-2"
+                                onclick="toggleFilter(2);" disabled>
+                            <label class="form-check-label filterfont" for="filter-sm-2" id="filter-sm-2-label">
+                                Tier 2 (0)
                             </label>
                         </div>
                         <div class="form-check mx-4">
-                            <input class="form-check-input selectable2" type="checkbox" value="" id="check3">
-                            <label class="form-check-label filterfont" for="check3">
-                                Tier 2 (4)
+                            <input class="form-check-input selectable2" type="checkbox" value="" id="filter-sm-3"
+                                onclick="toggleFilter(3);" disabled>
+                            <label class="form-check-label filterfont" for="filter-sm-3" id="filter-sm-3-label">
+                                Tier 3 (0)
                             </label>
                         </div>
-                        <div class="form-check mx-4">
-                            <input class="form-check-input selectable2" type="checkbox" value="" id="check4">
-                            <label class="form-check-label filterfont" for="check4">
-                                Whitelist (19)
-                            </label>
-                        </div>
-                        <div class="form-check mx-4">
-                            <input class="form-check-input selectable2" type="checkbox" value="" id="check5">
-                            <label class="form-check-label filterfont" for="check5">
-                                Other (2)
-                            </label>
-                        </div>
-                    </div>
-                    <div class="modal-footer justify-content-around bbg2">
-                        <button type="button" class="btn btnn graybtn font31 p-2 mx-2 text-light close"
-                            data-dismiss="modal" aria-label="Close">CANCEL</button>
-                        <button type="button" class="btn btnn yellowbtn font31 p-2">APPLY FILTER</button>
+
                     </div>
                 </div>
             </div>
