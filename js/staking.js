@@ -7,8 +7,8 @@ let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
 
-let contractAddress = "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4";
-let mainContractAddress = "0xB54984BEBDA259e5f52191fAA2D234692775a2aE";
+let contractAddress = "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
+let mainContractAddress = "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
 let abi = [{
         "inputs": [{
             "internalType": "address",
@@ -790,7 +790,7 @@ async function unstake() {
 
 async function loadSeasonEnds() {
     try {
-        const web3 = new Web3(new Web3.providers.HttpProvider('https://rinkeby.infura.io/v3/5ad686d1f5ab4565a30a8ae793e209bc'));
+        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/5ad686d1f5ab4565a30a8ae793e209bc'));
         const stakingContract = new web3.eth.Contract(abi, contractAddress);
         let time = await stakingContract.methods.currentSeasonStartTime().call();
 

@@ -11,9 +11,6 @@ let agentsStaked = {};
 let itemsFetched;
 let highestTier = 0;
 let filterArray = [];
-let contractAddress = "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4";
-let mainContractAddress = "0xB54984BEBDA259e5f52191fAA2D234692775a2aE";
-let abi = []
 
 
 async function init() {

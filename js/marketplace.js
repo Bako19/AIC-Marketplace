@@ -11,8 +11,8 @@ let agentsStaked = {};
 let itemsFetched;
 let highestTier = 0;
 let filterArray = [];
-let contractAddress = "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4";
-let mainContractAddress = "0xB54984BEBDA259e5f52191fAA2D234692775a2aE";
+let contractAddress = "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
+let mainContractAddress = "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
 let abi = [{
         "inputs": [{
             "internalType": "address",
