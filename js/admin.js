@@ -301,7 +301,7 @@ async function downloadWlAddresses() {
         itemId: document.getElementById("d-itemId").value
     })
     if (res.data.error == undefined) {
-        downloadObjectAsJson(res.data.item.wlAddresses, "list");
+        downloadObjectAsJson({wl:res.data.item.wlAddresses,claimed:res.data.item.claimedAddresses}, "list");
         toastr.success("");
     } else {
         toastr.error(res.data.desc);
