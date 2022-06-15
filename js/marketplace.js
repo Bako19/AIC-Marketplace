@@ -11,8 +11,9 @@ let agentsStaked = {};
 let itemsFetched;
 let highestTier = 0;
 let filterArray = [];
-let contractAddress = "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
-let mainContractAddress = "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
+let contractAddress = (isLocalHost()) ? "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4" : "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
+let mainContractAddress = (isLocalHost()) ? "0xB54984BEBDA259e5f52191fAA2D234692775a2aE" : "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
+let apiUrl = (isLocalHost()) ? "http://localhost" : "https://mapi.artificialintelligenceclub.io";
 let abi = [{
         "inputs": [{
             "internalType": "address",
@@ -144,6 +145,9 @@ let abi = [{
     }
 ]
 
+function isLocalHost() {
+    return window.location.hostname.indexOf('localhost') !== -1 || window.location.hostname.indexOf('127.0.0.1') !== -1;
+}
 
 async function init() {
     const providerOptions = {};
@@ -166,22 +170,6 @@ async function fetchAccountData() {
     const web3 = new Web3(provider);
     const accounts = await web3.eth.getAccounts();
     selectedAccount = accounts[0];
-}
-
-async function onConnect() {
-    try {
-        provider = await web3Modal.connect();
-    } catch (e) {
-        console.log("Could not get a wallet connection", e);
-        return;
-    }
-
-    provider.on("accountsChanged", (accounts) => {
-        console.log(accounts[0])
-        fetchAccountData();
-    });
-
-    fetchAccountData();
 }
 
 
@@ -241,7 +229,7 @@ async function toggleCheckbox(id, itemId) {
 
 async function updateProfile_sm() {
     toastr.info("Updating");
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post(apiUrl + "/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-sm").value,
@@ -277,7 +265,7 @@ async function updateProfile_sm() {
 
 async function updateProfile_lg() {
     toastr.info("Updating");
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post(apiUrl + "/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-lg").value,
@@ -312,7 +300,7 @@ async function updateProfile_lg() {
 
 
 async function fetchHistory() {
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getHistory/", {
+    let res = await axios.post(apiUrl + "/getHistory/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -341,7 +329,7 @@ async function fetchHistory() {
 
 
 async function fetchProfile() {
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getProfile/", {
+    let res = await axios.post(apiUrl + "/getProfile/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -385,7 +373,7 @@ async function claimItem(itemId) {
         return
     }
 
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/claimItem/", {
+    let res = await axios.post(apiUrl + "/claimItem/", {
         token: localStorage.getItem("auth"),
         itemId: itemId,
         tokenId: tokenId
@@ -409,10 +397,10 @@ async function fetchItems() {
         }
     })
 
-    itemsFetched = await axios.post("https://mapi.artificialintelligenceclub.io/getItems/", {
+    itemsFetched = await axios.post(apiUrl + "/getItems/", {
         token: localStorage.getItem("auth")
     })
-    axios.post("https://mapi.artificialintelligenceclub.io/checkAgentsClaimDate/", {
+    axios.post(apiUrl + "/checkAgentsClaimDate/", {
         token: localStorage.getItem("auth"),
         agents: tokensStakedIds
     }).then(async res => {
@@ -437,9 +425,6 @@ async function fetchItems() {
                 }
 
             }
-            // items making 
-
-
             // must be done in the filter if there are more filters!
 
 
@@ -463,9 +448,10 @@ async function fetchItems() {
 
                 let agentsAvailable = "";
                 let agentsAvailableCount = 0;
-                Object.keys(agentsStaked).forEach((agentId, index) => {
 
-                    if (/*agentsStaked[agentId].tierId >= item.tierId &&*/ agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) - 24 * 60 * 60)) {
+                Object.keys(agentsStaked).forEach((agentId, index) => {
+  
+                    if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) - 24 * 60 * 60)) {
                         agentsAvailableCount++;
                         agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
 <div id="${index}-${item.id}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
@@ -501,7 +487,7 @@ async function fetchItems() {
                 <div class="rounded cardbg ">
                     <img class="col-11 rounded mt-2 mt-md-3" src="${item.image}" alt="">
                     <p class="font8 mt-1 mb-0">${item.name}</p>
-                    <p class="font9 mt-2">${item.quantityLeft} Available</p>
+                    <p class="font9 mt-2">${((item.type == "raffle")?"|| Raffle ||":item.quantityLeft + " Available")}</p>
                     <div class="d-flex justify-content-between pb-2 mx-2">
                         <p class="my-auto tier px-2 pb-1 rounded-pill">Tier ${item.tierId}</p>
                         ${(isClaimable)?`<button class="btn btnn yellowbtn p-1 pb-sm-2" class="btn btn-primary" data-toggle="modal"data-target="#modal-${item.id}"><p class="font31 m-0">Claim</p>
@@ -524,7 +510,7 @@ async function fetchItems() {
                                             <div class="my-auto px-3 text-start">
                                                 <p class="font8 mt-3 mb-0">${item.name}
                                                 </p>
-                                                <p class="font9 mb-0">${item.quantityLeft} Available</p><br>
+                                                <p class="font9 mb-0">${((item.type == "raffle")?"|| Raffle ||":item.quantityLeft + " Available")}</p><br>
                                                 <p class="my-auto tier px-2 rounded-pill widthfit">Tier ${item.tierId}</p>
                                             </div>
                                         </div>
@@ -757,7 +743,7 @@ async function connect() {
         const web3 = new Web3(provider);
         let time = Math.floor(new Date().getTime() / 1000)
         let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
+        let res = await axios.post(apiUrl + "/auth/", {
             wallet: selectedAccount.toLowerCase(),
             signature: signature,
             time: time
@@ -774,7 +760,7 @@ async function connect() {
         }
 
     } else {
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/isAuthValid/", {
+        let res = await axios.post(apiUrl + "/isAuthValid/", {
             wallet: selectedAccount.toLowerCase(),
             token: localStorage.getItem("auth")
         })
@@ -783,7 +769,7 @@ async function connect() {
             const web3 = new Web3(provider);
             let time = Math.floor(new Date().getTime() / 1000)
             let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-            let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
+            let res = await axios.post(apiUrl + "/auth/", {
                 wallet: selectedAccount.toLowerCase(),
                 signature: signature,
                 time: time

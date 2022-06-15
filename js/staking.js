@@ -7,9 +7,24 @@ let isConnected = false;
 let isEligibleForOG = false;
 let isEligibleForPR = false;
 
-let contractAddress = "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
-let mainContractAddress = "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
+let contractAddress = (isLocalHost()) ? "0xAEe90Fbf15448e9FA46419ddd075858a571E16e4" : "0x1FdBAaF5A73c308A3D66F620201983A28b49d7f6";
+let mainContractAddress = (isLocalHost()) ? "0xB54984BEBDA259e5f52191fAA2D234692775a2aE" : "0xB78f1A96F6359Ef871f594Acb26900e02bFc8D00";
+let apiUrl = (isLocalHost()) ? "http://localhost" : "https://mapi.artificialintelligenceclub.io";
 let abi = [{
+        "inputs": [{
+            "internalType": "address",
+            "name": "owner",
+            "type": "address"
+        }],
+        "name": "tokensOwnedBy",
+        "outputs": [{
+            "internalType": "uint256[]",
+            "name": "",
+            "type": "uint256[]"
+        }],
+        "stateMutability": "view",
+        "type": "function"
+    }, {
         "inputs": [{
             "internalType": "address",
             "name": "owner",
@@ -103,17 +118,6 @@ let abi = [{
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "owner",
-        "outputs": [{
-            "internalType": "address",
-            "name": "",
-            "type": "address"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [{
             "internalType": "uint256",
             "name": "",
@@ -140,21 +144,6 @@ let abi = [{
             "name": "owner",
             "type": "address"
         }],
-        "name": "tokensOwnedBy",
-        "outputs": [{
-            "internalType": "uint256[]",
-            "name": "",
-            "type": "uint256[]"
-        }],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [{
-            "internalType": "address",
-            "name": "owner",
-            "type": "address"
-        }],
         "name": "tokensStakedBy",
         "outputs": [{
             "internalType": "bool[]",
@@ -165,6 +154,10 @@ let abi = [{
         "type": "function"
     }
 ]
+
+function isLocalHost() {
+    return window.location.hostname.indexOf('localhost') !== -1 || window.location.hostname.indexOf('127.0.0.1') !== -1;
+}
 
 let selectedStakedAgents = [];
 let selectedOwnedAgents = [];
@@ -193,26 +186,12 @@ async function fetchAccountData() {
     loadTokens()
 }
 
-async function onConnect() {
-    try {
-        provider = await web3Modal.connect();
-    } catch (e) {
-        console.log("Could not get a wallet connection", e);
-        return;
-    }
 
-    provider.on("accountsChanged", (accounts) => {
-        console.log(accounts[0])
-        fetchAccountData();
-    });
-
-    fetchAccountData();
-}
 
 
 async function updateProfile_sm() {
     toastr.info("Updating");
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post(apiUrl + "/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-sm").value,
@@ -248,7 +227,7 @@ async function updateProfile_sm() {
 
 async function updateProfile_lg() {
     toastr.info("Updating");
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post(apiUrl + "/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-lg").value,
@@ -283,7 +262,7 @@ async function updateProfile_lg() {
 
 
 async function fetchHistory() {
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getHistory/", {
+    let res = await axios.post(apiUrl + "/getHistory/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -312,7 +291,7 @@ async function fetchHistory() {
 
 
 async function fetchProfile() {
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getProfile/", {
+    let res = await axios.post(apiUrl + "/getProfile/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -357,7 +336,7 @@ async function connect() {
         const web3 = new Web3(provider);
         let time = Math.floor(new Date().getTime() / 1000)
         let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
+        let res = await axios.post(apiUrl + "/auth/", {
             wallet: selectedAccount.toLowerCase(),
             signature: signature,
             time: time
@@ -372,7 +351,7 @@ async function connect() {
             toastr.error(res.data.desc);
         }
     } else {
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/isAuthValid/", {
+        let res = await axios.post(apiUrl + "/isAuthValid/", {
             wallet: selectedAccount.toLowerCase(),
             token: localStorage.getItem("auth")
         })
@@ -381,7 +360,7 @@ async function connect() {
             const web3 = new Web3(provider);
             let time = Math.floor(new Date().getTime() / 1000)
             let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-            let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
+            let res = await axios.post(apiUrl + "/auth/", {
                 wallet: selectedAccount.toLowerCase(),
                 signature: signature,
                 time: time
@@ -790,7 +769,13 @@ async function unstake() {
 
 async function loadSeasonEnds() {
     try {
-        const web3 = new Web3(new Web3.providers.HttpProvider('https://mainnet.infura.io/v3/5ad686d1f5ab4565a30a8ae793e209bc'));
+        let network;
+        if (isLocalHost()) {
+            network = "rinkeby"
+        } else {
+            network = "mainnet"
+        }
+        const web3 = new Web3(new Web3.providers.HttpProvider(`https://${network}.infura.io/v3/5ad686d1f5ab4565a30a8ae793e209bc`));
         const stakingContract = new web3.eth.Contract(abi, contractAddress);
         let time = await stakingContract.methods.currentSeasonStartTime().call();
 

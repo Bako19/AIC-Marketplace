@@ -13,6 +13,11 @@ let highestTier = 0;
 let filterArray = [];
 
 
+let apiUrl = (isLocalHost()) ? "http://localhost" : "https://mapi.artificialintelligenceclub.io";
+
+function isLocalHost() {
+    return window.location.hostname.indexOf('localhost') !== -1 || window.location.hostname.indexOf('127.0.0.1') !== -1;
+}
 async function init() {
     const providerOptions = {};
     web3Modal = new Web3Modal({
@@ -36,21 +41,7 @@ async function fetchAccountData() {
     selectedAccount = accounts[0];
 }
 
-async function onConnect() {
-    try {
-        provider = await web3Modal.connect();
-    } catch (e) {
-        console.log("Could not get a wallet connection", e);
-        return;
-    }
 
-    provider.on("accountsChanged", (accounts) => {
-        console.log(accounts[0])
-        fetchAccountData();
-    });
-
-    fetchAccountData();
-}
 
 
 function getDateFromUnix(unixTime) {
@@ -75,7 +66,7 @@ function getDateFromUnix(unixTime) {
 
 async function updateProfile_sm() {
     toastr.info("Updating");
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post(apiUrl + "/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-sm").value,
@@ -111,7 +102,7 @@ async function updateProfile_sm() {
 
 async function updateProfile_lg() {
     toastr.info("Updating");
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateProfile/", {
+    let res = await axios.post(apiUrl + "/updateProfile/", {
         token: localStorage.getItem("auth"),
         newProfile: {
             discord: document.getElementById("discord-lg").value,
@@ -146,7 +137,7 @@ async function updateProfile_lg() {
 
 
 async function fetchHistory() {
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getHistory/", {
+    let res = await axios.post(apiUrl + "/getHistory/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -175,7 +166,7 @@ async function fetchHistory() {
 
 
 async function fetchProfile() {
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/getProfile/", {
+    let res = await axios.post(apiUrl + "/getProfile/", {
         token: localStorage.getItem("auth")
     })
     if (res.data.authenticated !== false) {
@@ -219,7 +210,7 @@ async function claimItem(itemId) {
         return
     }
 
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/claimItem/", {
+    let res = await axios.post(apiUrl + "/claimItem/", {
         token: localStorage.getItem("auth"),
         itemId: itemId,
         tokenId: tokenId
@@ -234,7 +225,7 @@ async function claimItem(itemId) {
 async function fetchItem() {
 
     if (document.getElementById("e-itemId").value) {
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/fetchItem/", {
+        let res = await axios.post(apiUrl + "/fetchItem/", {
             token: localStorage.getItem("auth"),
             itemId: document.getElementById("e-itemId").value
         })
@@ -280,7 +271,7 @@ async function fetchItem() {
 async function editItem() {
 
     if (document.getElementById("e-itemId").value) {
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/updateItem/", {
+        let res = await axios.post(apiUrl + "/updateItem/", {
             token: localStorage.getItem("auth"),
             itemId: document.getElementById("e-itemId").value,
             updatedItem: {
@@ -305,12 +296,12 @@ async function editItem() {
 
 async function downloadWlAddresses() {
 
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/fetchWlAddresses/", {
+    let res = await axios.post(apiUrl + "/fetchWlAddresses/", {
         token: localStorage.getItem("auth"),
         itemId: document.getElementById("d-itemId").value
     })
     if (res.data.error == undefined) {
-        downloadObjectAsJson(res.data.item.wlAddresses,"list");
+        downloadObjectAsJson(res.data.item.wlAddresses, "list");
         toastr.success("");
     } else {
         toastr.error(res.data.desc);
@@ -319,19 +310,19 @@ async function downloadWlAddresses() {
 
 }
 
-function downloadObjectAsJson(exportObj, exportName){
+function downloadObjectAsJson(exportObj, exportName) {
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
     var downloadAnchorNode = document.createElement('a');
-    downloadAnchorNode.setAttribute("href",     dataStr);
+    downloadAnchorNode.setAttribute("href", dataStr);
     downloadAnchorNode.setAttribute("download", exportName + ".json");
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
-  }
+}
 async function createItem() {
 
 
-    let res = await axios.post("https://mapi.artificialintelligenceclub.io/createItem/", {
+    let res = await axios.post(apiUrl + "/createItem/", {
         token: localStorage.getItem("auth"),
         newItem: {
             name: document.getElementById("c-itemName").value,
@@ -372,7 +363,7 @@ async function connect() {
         const web3 = new Web3(provider);
         let time = Math.floor(new Date().getTime() / 1000)
         let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
+        let res = await axios.post(apiUrl + "/auth/", {
             wallet: selectedAccount.toLowerCase(),
             signature: signature,
             time: time
@@ -388,7 +379,7 @@ async function connect() {
         }
 
     } else {
-        let res = await axios.post("https://mapi.artificialintelligenceclub.io/isAuthValid/", {
+        let res = await axios.post(apiUrl + "/isAuthValid/", {
             wallet: selectedAccount.toLowerCase(),
             token: localStorage.getItem("auth")
         })
@@ -397,7 +388,7 @@ async function connect() {
             const web3 = new Web3(provider);
             let time = Math.floor(new Date().getTime() / 1000)
             let signature = await web3.eth.personal.sign(`${selectedAccount.toLowerCase()}+${time}`, selectedAccount);
-            let res = await axios.post("https://mapi.artificialintelligenceclub.io/auth/", {
+            let res = await axios.post(apiUrl + "/auth/", {
                 wallet: selectedAccount.toLowerCase(),
                 signature: signature,
                 time: time
