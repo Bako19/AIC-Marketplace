@@ -465,7 +465,7 @@ async function fetchItems() {
                 let agentsAvailableCount = 0;
                 Object.keys(agentsStaked).forEach((agentId, index) => {
 
-                    if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) - 24 * 60 * 60)) {
+                    if (/*agentsStaked[agentId].tierId >= item.tierId &&*/ agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) - 24 * 60 * 60)) {
                         agentsAvailableCount++;
                         agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
 <div id="${index}-${item.id}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
