@@ -235,6 +235,8 @@ async function fetchItem() {
             document.getElementById("e-itemQuantity").value = res.data.item.quantity;
             document.getElementById("e-itemTierId").value = res.data.item.tierId;
             document.getElementById("e-itemEnabled").checked = res.data.item.enabled;
+           
+            document.getElementById("e-itemType").checked =  (res.data.item.type == "raffle");
             document.getElementById("e-itemLastSubmitTime").value = res.data.item.lastSubmitTime;
 
             document.getElementById("e-itemName").disabled = false;
@@ -242,6 +244,7 @@ async function fetchItem() {
             document.getElementById("e-itemQuantity").disabled = false;
             document.getElementById("e-itemTierId").disabled = false;
             document.getElementById("e-itemEnabled").disabled = false;
+            document.getElementById("e-itemType").disabled = false;
             document.getElementById("e-itemLastSubmitTime").disabled = false;
             document.getElementById("e-confirm").disabled = false;
             toastr.success("Fetched");
@@ -251,6 +254,7 @@ async function fetchItem() {
             document.getElementById("e-itemQuantity").value = "";
             document.getElementById("e-itemTierId").value = "";
             document.getElementById("e-itemEnabled").checked = false;
+            document.getElementById("e-itemType").checked = false;
             document.getElementById("e-itemLastSubmitTime").value = "";
 
             document.getElementById("e-itemName").disabled = true;
@@ -258,6 +262,7 @@ async function fetchItem() {
             document.getElementById("e-itemQuantity").disabled = true;
             document.getElementById("e-itemTierId").disabled = true;
             document.getElementById("e-itemEnabled").disabled = true;
+            document.getElementById("e-itemType").disabled = true;
             document.getElementById("e-itemLastSubmitTime").disabled = true;
             document.getElementById("e-confirm").disabled = true;
             toastr.error(res.data.desc);
@@ -280,6 +285,7 @@ async function editItem() {
                 quantity: document.getElementById("e-itemQuantity").value,
                 tierId: document.getElementById("e-itemTierId").value,
                 enabled: document.getElementById("e-itemEnabled").checked,
+                isRaffle: document.getElementById("e-itemType").checked,
                 lastSubmitTime: document.getElementById("e-itemLastSubmitTime").value
             }
         })
@@ -301,7 +307,10 @@ async function downloadWlAddresses() {
         itemId: document.getElementById("d-itemId").value
     })
     if (res.data.error == undefined) {
-        downloadObjectAsJson({wl:res.data.item.wlAddresses,claimed:res.data.item.claimedAddresses}, "list");
+        downloadObjectAsJson({
+            wl: res.data.item.wlAddresses,
+            claimed: res.data.item.claimedAddresses
+        }, "list");
         toastr.success("");
     } else {
         toastr.error(res.data.desc);
@@ -330,7 +339,9 @@ async function createItem() {
             quantity: document.getElementById("c-itemQuantity").value,
             tierId: document.getElementById("c-itemTierId").value,
             enabled: document.getElementById("c-itemEnabled").checked,
+            isRaffle: document.getElementById("c-itemType").checked,
             lastSubmitTime: document.getElementById("c-itemLastSubmitTime").value
+
         }
     })
     if (res.data.error == undefined) {
