@@ -446,13 +446,14 @@ async function fetchItems() {
                 }
 
 
+
                 let agentsAvailable = "";
-                let agentsAvailableCount = 0;
+
 
                 Object.keys(agentsStaked).forEach((agentId, index) => {
-  
+
                     if (agentsStaked[agentId].tierId >= item.tierId && agentsStaked[agentId].claimTime < (Math.floor(new Date().getTime() / 1000) - 24 * 60 * 60)) {
-                        agentsAvailableCount++;
+
                         agentsAvailable += ` <div class="col-3 mx-3 justify-content-center">
 <div id="${index}-${item.id}" class="position-relative my-2 mt-3 rounded-3"style="border:2px solid rgb(0 0 0 / 0%)">
     <div class="form-check position-absolute checkpos p-0">
@@ -471,18 +472,20 @@ async function fetchItems() {
 </div>`
                     }
                 })
+                if (agentsAvailable == "") {
+                    isClaimable = false;
+                }
 
-                if (agentsAvailableCount > 0) {
-                    if (item.tierId == 1) {
-                        tier1TotalTokens++;
-                    }
-                    if (item.tierId == 2) {
-                        tier2TotalTokens++;
-                    }
-                    if (item.tierId == 3) {
-                        tier3TotalTokens++;
-                    }
-                    document.getElementById("marketplace-items").innerHTML += `
+                if (item.tierId == 1) {
+                    tier1TotalTokens++;
+                }
+                if (item.tierId == 2) {
+                    tier2TotalTokens++;
+                }
+                if (item.tierId == 3) {
+                    tier3TotalTokens++;
+                }
+                document.getElementById("marketplace-items").innerHTML += `
     <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
                 <div class="rounded cardbg ">
                     <img class="col-11 rounded mt-2 mt-md-3" src="${item.image}" alt="">
@@ -535,7 +538,7 @@ async function fetchItems() {
                     </div>
                 </div>
             </div>`
-                }
+
             })
             if (tier1TotalTokens == 0) {
                 document.getElementById("filter-sm-1").disabled = true
@@ -661,7 +664,11 @@ async function filterByTier(tierArray) {
             }
         })
 
-        if (tierArray.includes(item.tierId)) {
+
+        if (agentsAvailable == "") {
+            isClaimable = false;
+        }
+        if (tierArray.includes(parseInt(item.tierId))) {
             document.getElementById("marketplace-items").innerHTML += `
             <div class="col-5 col-md-4 col-lg-3 col-xxl-2 text-center text-light text-center mb-4 mt-0">
                         <div class="rounded cardbg ">
