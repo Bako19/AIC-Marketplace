@@ -226,7 +226,6 @@ async function toggleCheckbox(id, itemId) {
 }
 
 
-
 async function updateProfile_sm() {
     toastr.info("Updating");
     let res = await axios.post(apiUrl + "/updateProfile/", {
@@ -234,6 +233,7 @@ async function updateProfile_sm() {
         newProfile: {
             discord: document.getElementById("discord-sm").value,
             twitter: document.getElementById("twitter-sm").value,
+            solAddress: document.getElementById("solAddress-sm").value,
             wlAddress: document.getElementById("wlAddress-sm").value,
             email: document.getElementById("email-sm").value
         }
@@ -248,6 +248,9 @@ async function updateProfile_sm() {
 
         document.getElementById("twitter-sm").value = res.data.profile.twitter;
         document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+        document.getElementById("solAddress-sm").value = res.data.profile.solAddress;
+        document.getElementById("solAddress-lg").value = res.data.profile.solAddress;
 
 
         document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
@@ -270,6 +273,7 @@ async function updateProfile_lg() {
         newProfile: {
             discord: document.getElementById("discord-lg").value,
             twitter: document.getElementById("twitter-lg").value,
+            solAddress: document.getElementById("solAddress-lg").value,
             wlAddress: document.getElementById("wlAddress-lg").value,
             email: document.getElementById("email-lg").value
         }
@@ -285,6 +289,8 @@ async function updateProfile_lg() {
         document.getElementById("twitter-sm").value = res.data.profile.twitter;
         document.getElementById("twitter-lg").value = res.data.profile.twitter;
 
+        document.getElementById("solAddress-sm").value = res.data.profile.solAddress;
+        document.getElementById("solAddress-lg").value = res.data.solAddress;
 
         document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
         document.getElementById("wlAddress-lg").value = res.data.profile.wlAddress;
@@ -341,6 +347,9 @@ async function fetchProfile() {
 
         document.getElementById("twitter-sm").value = res.data.profile.twitter;
         document.getElementById("twitter-lg").value = res.data.profile.twitter;
+
+        document.getElementById("solAddress-sm").value = (res.data.profile.solAddress !== undefined)?res.data.profile.solAddress:"";
+        document.getElementById("solAddress-lg").value = (res.data.profile.solAddress !== undefined)?res.data.profile.solAddress:"";
 
 
         document.getElementById("wlAddress-sm").value = res.data.profile.wlAddress;
